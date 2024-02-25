@@ -1,0 +1,10 @@
+[project]
+name = "sneck"
+version = "0.0.0"
+description = "A basic recreation of the classic game."
+license = { text = "MIT" }
+authors = [{ name = "Dave Jordan", email = "le_dangereux@hotmail.co.uk"}]
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
