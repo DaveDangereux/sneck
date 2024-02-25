@@ -7,7 +7,7 @@ from .snake import Snake
 
 
 class Game:
-    game_counter = 1
+    game_counter = 0
 
     def __init__(self, fps=9):
         self._frame_duration = 1.0 / fps
@@ -24,18 +24,20 @@ class Game:
 
     def run(self):
         while True:
+            self.game_counter += 1
             self._stdscr.clear()
+            # self.print_debug_info()
             self.remove_old_tail()
             self.draw_snake_head()
             self.display_board()
             time.sleep(self._frame_duration)
             self.process_user_input()
             self._snake.move()
-            self.print_debug_info()
-            self.game_counter += 1
 
     def print_debug_info(self):
-        debug_info = f"GC: {self.game_counter} | Dir: {self._snake._direction}\n"
+        debug_info = (
+            f"GC: {self.game_counter} | Dir: {self._snake._current_direction}\n"
+        )
         self._stdscr.addstr(debug_info)
 
     def display_board(self):
