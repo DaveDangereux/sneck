@@ -2,13 +2,13 @@ import curses
 import time
 
 from .board import Board
+from .direction import Direction
 from .snake import Snake
 
 
 class Game:
-    fps = 7
-
-    def __init__(self):
+    def __init__(self, fps=7):
+        self._frame_duration = 1.0 / 7
         self.stdscr = curses.initscr()
         self.configure_curses()
 
@@ -24,9 +24,10 @@ class Game:
         while True:
             self.stdscr.clear()
             self.process_user_input()
-            self.update_board()
+            self._snake.move()
+            self.add_snake_to_board()
             self.display_board()
-            time.sleep(1.0 / self.fps)
+            time.sleep(self._frame_duration)
 
     def display_board(self):
         # TODO: Protect against exceptions due to the terminal being too small
@@ -41,17 +42,21 @@ class Game:
         except Exception:
             key = ""
 
-        if key == "q":
-            curses.endwin()
-            exit(0)
-        elif key in "hjkl":
-            self.stdscr.addstr(key)
+        match key:
+            case "q":
+                curses.endwin()
+                exit(0)
+            case "h":
+                self._snake.set_direction(Direction.LEFT)
+            case "j":
+                self._snake.set_direction(Direction.DOWN)
+            case "k":
+                self._snake.set_direction(Direction.UP)
+            case "l":
+                self._snake.set_direction(Direction.RIGHT)
 
-    def update_board(self):
-        self.update_snake()
-
-    def update_snake(self):
-        row = self._snake.position.row
-        col = self._snake.position.col
+    def add_snake_to_board(self):
+        position = self._snake.get_position()
         head = self._snake.head
-        self._board.write_cell(row, col, head)
+
+        self._board.write_cell(position, head)

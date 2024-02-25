@@ -49,6 +49,6 @@ class Board:
     def get_center(self) -> Position:
         return Position(self._rows // 2, self._columns // 2)
 
-    def write_cell(self, row: int, col: int, char: str) -> None:
-        self._board[row][col] = char
+    def write_cell(self, position: Position, char: str) -> None:
+        self._board[position.row][position.col] = char
         self.refresh_board_string()
