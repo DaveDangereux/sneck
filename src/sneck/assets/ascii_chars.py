@@ -6,3 +6,5 @@ box_chars = {
     "horizontal_bar": "―",
     "vertical_bar": "│",
 }
+
+snake_chars = {"head": "█", "body": "█"}
