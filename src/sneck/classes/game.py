@@ -2,8 +2,10 @@ import curses
 import random
 import time
 
+from ..assets.ascii_chars import fruit
 from .board import Board
 from .direction import Direction
+from .position import Position
 from .snake import Snake
 
 
@@ -22,6 +24,8 @@ class Game:
         self._stdscr.nodelay(True)
 
     def run(self) -> None:
+        self._place_fruit()
+
         while True:
             self._game_counter += 1
             self._stdscr.clear()
@@ -64,3 +68,13 @@ class Game:
                 self._snake.set_direction(Direction.UP)
             case "l":
                 self._snake.set_direction(Direction.RIGHT)
+
+    def _place_fruit(self) -> None:
+        rows, cols = self._board.get_dimensions()
+
+        while True:
+            random_cell = Position(random.randint(0, rows), random.randint(0, cols))
+            cell_value = self._board.get_cell(random_cell)
+            if cell_value == " ":
+                self._board.write_cell(random_cell, fruit)
+                return

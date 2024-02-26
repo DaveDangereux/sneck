@@ -5,10 +5,10 @@ from .position import Position
 
 
 class Board:
-    def __init__(self, rows=25, columns=50):
+    def __init__(self, rows=25, cols=50):
         # TODO: Prevent these values from exceeding the terminal dimensions
         self._rows = rows
-        self._columns = columns
+        self._cols = cols
         self._board = self._make_board()
         self._board_string = ""
         self._refresh_board_string()
@@ -17,14 +17,20 @@ class Board:
         return self._board_string
 
     def get_center(self) -> Position:
-        return Position(self._rows // 2, self._columns // 2)
+        return Position(self._rows // 2, self._cols // 2)
+
+    def get_dimensions(self) -> tuple[int, int]:
+        return self._rows, self._cols
 
     def write_cell(self, position: Position, char: str) -> None:
         self._board[position.row][position.col] = char
         self._refresh_board_string()
 
+    def get_cell(self, position: Position) -> str:
+        return self._board[position.row][position.col]
+
     def _make_row(self, left_char: str, middle_char: str, right_char: str) -> list[str]:
-        row = [middle_char] * self._columns
+        row = [middle_char] * self._cols
         row[0] = left_char
         row[-1] = right_char
         return row
