@@ -12,6 +12,7 @@ class Renderer:
         self.stop = curses.endwin
         self.get_key = self._stdscr.getkey
         self.add_char = self._stdscr.addch
+        self.rows, self.cols = self._stdscr.getmaxyx()
 
         # Basic init
         curses.noecho()

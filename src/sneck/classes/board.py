@@ -22,7 +22,7 @@ class Board:
     def get_dimensions(self) -> tuple[int, int]:
         return self._rows, self._cols
 
-    def get_rows(self):
+    def get_lines(self):
         for row in self._board:
             yield row
 

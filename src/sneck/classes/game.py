@@ -51,9 +51,11 @@ class Game:
     def _draw_board_to_screen(self) -> None:
         # TODO: Protect against exceptions due to the terminal being too small
         # to draw the full string
-        row_offset = 1
+        board_rows, board_cols = self._board.get_dimensions()
+        col_offset = (self._renderer.cols - board_cols) // 2
+        row_offset = (self._renderer.rows - board_rows) // 2
 
-        for row_index, row in enumerate(self._board.get_rows()):
+        for row_index, row in enumerate(self._board.get_lines()):
             for char_index, char in enumerate(row):
                 colour = self._renderer.WHITE
 
@@ -65,7 +67,7 @@ class Game:
                     colour = self._renderer.RED
 
                 self._renderer.add_char(
-                    row_index + row_offset, char_index, char, colour
+                    row_index + row_offset, char_index + col_offset, char, colour
                 )
 
     def _process_user_input(self) -> None:
@@ -111,7 +113,14 @@ class Game:
     def _draw_score_to_screen(self) -> None:
         score_text = f"Score: {self._score:03d}"
         formatted_score_text = self._right_justify_text(score_text) + "\n"
-        self._renderer.add_string(formatted_score_text, self._renderer.YELLOW)
+
+        board_rows, board_cols = self._board.get_dimensions()
+        col_offset = (self._renderer.cols - board_cols) // 2
+        row_offset = (self._renderer.rows - board_rows) // 2 - 1
+
+        self._renderer.add_string(
+            row_offset, col_offset, formatted_score_text, self._renderer.YELLOW
+        )
 
     def _right_justify_text(self, text: str) -> str:
         _, width = self._board.get_dimensions()
