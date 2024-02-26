@@ -5,7 +5,7 @@ from .position import Position
 
 
 class Board:
-    def __init__(self, rows=21, cols=28):
+    def __init__(self, rows=18, cols=24):
         # TODO: Prevent these values from exceeding the terminal dimensions
         self._rows = rows
         self._cols = cols
@@ -21,6 +21,10 @@ class Board:
 
     def get_dimensions(self) -> tuple[int, int]:
         return self._rows, self._cols
+
+    def get_rows(self):
+        for row in self._board:
+            yield row
 
     def write_cell(self, position: Position, char: str) -> None:
         self._board[position.row][position.col] = char

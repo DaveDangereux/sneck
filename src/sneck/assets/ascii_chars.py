@@ -9,4 +9,4 @@ box_chars = {
 
 snake_chars = {"head": "█"}
 
-fruit = "◯"
+fruit = "◉"
