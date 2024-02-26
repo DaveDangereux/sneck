@@ -93,6 +93,8 @@ class Game:
             self._place_fruit()
             self._snake.increase_length()
             self._score += 1
+        else:
+            self._handle_game_over()
 
     def _draw_score_to_screen(self) -> None:
         score_text = f"Score: {self._score:03d}"
@@ -103,3 +105,6 @@ class Game:
         _, width = self._board.get_dimensions()
         left_space = " " * (width - len(text))
         return left_space + text
+
+    def _handle_game_over(self) -> None:
+        exit(0)

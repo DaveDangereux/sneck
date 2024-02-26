@@ -57,4 +57,4 @@ class Board:
         return board
 
     def _refresh_board_string(self) -> None:
-        self._board_string = "\n".join(["".join(row) for row in self._board])
+        self._board_string = "\n".join(["".join(row) for row in self._board]) + "\n"
