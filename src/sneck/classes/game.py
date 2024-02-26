@@ -11,6 +11,7 @@ from .snake import Snake
 
 class Game:
     _game_counter = 0
+    _score = 0
 
     def __init__(self, fps=8):
         self._frame_duration = 1.0 / fps
@@ -27,10 +28,14 @@ class Game:
         self._place_fruit()
 
         while True:
+            # TODO: Fix bug where fruit is eaten too quickly and doesn't
+            # respawn
             self._game_counter += 1
             self._stdscr.clear()
             self._process_snake_graphic()
+            self._draw_score_to_screen()
             self._draw_board_to_screen()
+            self._stdscr.refresh()
             time.sleep(self._frame_duration)
             self._process_user_input()
             self._snake.move()
@@ -51,7 +56,6 @@ class Game:
         # TODO: Protect against exceptions due to the terminal being too small
         # to draw the full string
         self._stdscr.addstr(str(self._board))
-        self._stdscr.refresh()
 
     def _process_user_input(self) -> None:
         try:
@@ -88,3 +92,14 @@ class Game:
         if value == fruit:
             self._place_fruit()
             self._snake.increase_length()
+            self._score += 1
+
+    def _draw_score_to_screen(self) -> None:
+        score_text = f"Score: {self._score:03d}"
+        formatted_score_text = self._right_justify_text(score_text) + "\n"
+        self._stdscr.addstr(formatted_score_text)
+
+    def _right_justify_text(self, text: str) -> str:
+        _, width = self._board.get_dimensions()
+        left_space = " " * (width - len(text))
+        return left_space + text
