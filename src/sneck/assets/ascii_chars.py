@@ -7,6 +7,6 @@ box_chars = {
     "vertical_bar": "│",
 }
 
-snake_chars = {"head": "█", "body": "█"}
+snake_chars = {"head": "█"}
 
 fruit = "◯"
