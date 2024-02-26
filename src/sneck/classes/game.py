@@ -12,7 +12,7 @@ from .snake import Snake
 class Game:
     _game_counter = 0
 
-    def __init__(self, fps=9):
+    def __init__(self, fps=8):
         self._frame_duration = 1.0 / fps
 
         self._board = Board()
@@ -42,6 +42,9 @@ class Game:
 
         head_position = self._snake.get_head_position()
         head_char = self._snake.head_char
+        target_cell_value = self._board.get_cell(head_position)
+        if target_cell_value != " ":
+            self._handle_collision(target_cell_value)
         self._board.write_cell(head_position, head_char)
 
     def _draw_board_to_screen(self) -> None:
@@ -73,8 +76,15 @@ class Game:
         rows, cols = self._board.get_dimensions()
 
         while True:
-            random_cell = Position(random.randint(0, rows), random.randint(0, cols))
+            random_cell = Position(
+                random.randint(0, rows - 1), random.randint(0, cols - 1)
+            )
             cell_value = self._board.get_cell(random_cell)
             if cell_value == " ":
                 self._board.write_cell(random_cell, fruit)
                 return
+
+    def _handle_collision(self, value: str) -> None:
+        if value == fruit:
+            self._place_fruit()
+            self._snake.increase_length()

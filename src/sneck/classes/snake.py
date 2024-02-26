@@ -55,3 +55,6 @@ class Snake:
         self._body_positions.append(current_position)
         if len(self._body_positions) > self._length:
             self._old_tail_position = self._body_positions.pop(0)
+
+    def increase_length(self):
+        self._length += 1

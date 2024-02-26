@@ -5,7 +5,7 @@ from .position import Position
 
 
 class Board:
-    def __init__(self, rows=25, cols=50):
+    def __init__(self, rows=20, cols=20):
         # TODO: Prevent these values from exceeding the terminal dimensions
         self._rows = rows
         self._cols = cols
