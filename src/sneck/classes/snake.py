@@ -6,9 +6,9 @@ from .position import Position
 
 
 class Snake:
-    head = snake_chars["head"]
+    head_char = snake_chars["head"]
 
-    OPPOSITE_DIRECTIONS = {
+    _OPPOSITE_DIRECTIONS = {
         Direction.UP: Direction.DOWN,
         Direction.LEFT: Direction.RIGHT,
         Direction.RIGHT: Direction.LEFT,
@@ -36,7 +36,7 @@ class Snake:
         return self._length
 
     def set_direction(self, direction: Direction):
-        if direction != self.OPPOSITE_DIRECTIONS[self._current_direction]:
+        if direction != self._OPPOSITE_DIRECTIONS[self._current_direction]:
             self._current_direction = direction
 
     def move(self):
