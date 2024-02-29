@@ -9,7 +9,8 @@ class Board:
         # TODO: Prevent these values from exceeding the terminal dimensions
         self._rows = rows
         self._cols = cols
-        self._board = self._make_board()
+        self._board = []
+        self.make_title_screen()
         self._board_string = ""
         self._refresh_board_string()
 
@@ -39,7 +40,7 @@ class Board:
         row[-1] = right_char
         return row
 
-    def _make_board(self) -> list[list[str]]:
+    def make_game_board(self) -> None:
         top_row = self._make_row(
             box_chars["top_left"], box_chars["horizontal_bar"], box_chars["top_right"]
         )
@@ -52,13 +53,22 @@ class Board:
             box_chars["bottom_right"],
         )
 
-        board = []
+        self._board = []
         for _ in range(self._rows):
-            board.append(copy(middle_row))
-        board[0] = top_row
-        board[-1] = bottom_row
+            self._board.append(copy(middle_row))
+        self._board[0] = top_row
+        self._board[-1] = bottom_row
 
-        return board
+    def make_title_screen(self):
+        self.make_game_board()
+
+        title_text = ["S N A K E", "Press any key to play"]
+        self._centre_on_board(title_text)
+
+    def _centre_on_board(self, text: list[str]) -> None: ...
+
+    def make_game_over(self):
+        self.make_game_board()
 
     def _refresh_board_string(self) -> None:
         self._board_string = "\n".join(["".join(row) for row in self._board]) + "\n"

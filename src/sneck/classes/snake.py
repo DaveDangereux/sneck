@@ -1,7 +1,7 @@
 from copy import copy
 
 from ..assets.ascii_chars import snake_chars
-from .direction import Direction
+from ..enumerations.direction import Direction
 from .position import Position
 
 
@@ -17,14 +17,21 @@ class Snake:
 
     def __init__(
         self,
-        initial_position: Position,
+        position: Position,
         length: int = 4,
         direction: Direction = Direction.UP,
     ):
-        self._current_direction = direction
-        self._body_positions = [initial_position]
-        self._length = length if length > 0 else 1
-        self._old_tail_position = initial_position
+        self._initial_position = position
+        self._initial_direction = direction
+        self._initial_length = length
+
+        self.reset_snake()
+
+    def reset_snake(self) -> None:
+        self._current_direction = self._initial_direction
+        self._body_positions = [self._initial_position]
+        self._length = self._initial_length if self._initial_length > 0 else 1
+        self._old_tail_position = self._initial_position
 
     def get_head_position(self):
         return copy(self._body_positions[-1])
