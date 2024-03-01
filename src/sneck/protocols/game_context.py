@@ -1,12 +1,12 @@
 from typing import Protocol
 
 from ..classes.board import Board
-from ..classes.renderer import Renderer
+from ..classes.screen import Screen
 
 
 class GameContext(Protocol):
     board: Board
-    renderer: Renderer
+    screen: Screen
     frame_duration: float
     game_counter: int
     score: int

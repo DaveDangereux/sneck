@@ -25,12 +25,12 @@ class PlayingState(GameState):
         while self.state_manager.state == self:
             # TODO: Fix bug where fruit is eaten too quickly and doesn't
             # respawn
-            self.game.renderer.erase()
+            self.game.screen.erase()
             self.game.game_counter += 1
             self._process_snake_graphic()
             self.game.draw_score_to_screen()
             self.game.draw_board_to_screen()
-            self.game.renderer.refresh()
+            self.game.screen.refresh()
             time.sleep(self.game.frame_duration)
             self._process_user_input()
             self.snake.move()
@@ -75,13 +75,13 @@ class PlayingState(GameState):
         set_snake_direction = self.snake.set_direction
 
         try:
-            key = self.game.renderer.get_key()
+            key = self.game.screen.get_key()
         except Exception:
             key = ""
 
         match key:
             case "q":
-                self.game.renderer.stop()
+                self.game.screen.stop()
 
                 exit(0)
             case "h":

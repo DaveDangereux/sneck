@@ -1,7 +1,7 @@
 import curses
 
 
-class Renderer:
+class Screen:
     def __init__(self):
         self._stdscr = curses.initscr()
 

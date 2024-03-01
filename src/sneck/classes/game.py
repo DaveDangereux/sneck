@@ -1,6 +1,6 @@
 from ..assets.ascii_chars import box_chars, fruit, snake_chars
 from .board import Board
-from .renderer import Renderer
+from .screen import Screen
 from .state_manager import StateManager
 
 
@@ -13,7 +13,7 @@ class Game:
         self.frame_duration = 1.0 / fps
 
         self.board = Board()
-        self.renderer = Renderer()
+        self.screen = Screen()
         self.state_manager = StateManager(self)
 
         self.disable_animation()
@@ -23,32 +23,32 @@ class Game:
             self.state_manager.run()
 
     def disable_animation(self) -> None:
-        self.renderer.delay_for_input()
+        self.screen.delay_for_input()
         self.frame_duration = 0
 
     def enable_animation(self) -> None:
-        self.renderer.no_delay_for_input()
+        self.screen.no_delay_for_input()
         self.frame_duration = 1.0 / self._fps
 
     def draw_board_to_screen(self) -> None:
         # TODO: Protect against exceptions due to the terminal being too small
         # to draw the full string
         board_rows, board_cols = self.board.get_dimensions()
-        col_offset = (self.renderer.cols - board_cols) // 2
-        row_offset = (self.renderer.rows - board_rows) // 2
+        col_offset = (self.screen.cols - board_cols) // 2
+        row_offset = (self.screen.rows - board_rows) // 2
 
         for row_index, row in enumerate(self.board.get_lines()):
             for char_index, char in enumerate(row):
-                colour = self.renderer.WHITE
+                colour = self.screen.WHITE
 
                 if char in box_chars.values():
-                    colour = self.renderer.MAGENTA
+                    colour = self.screen.MAGENTA
                 elif char in snake_chars.values():
-                    colour = self.renderer.GREEN
+                    colour = self.screen.GREEN
                 elif char is fruit:
-                    colour = self.renderer.RED
+                    colour = self.screen.RED
 
-                self.renderer.add_char(
+                self.screen.add_char(
                     row_index + row_offset, char_index + col_offset, char, colour
                 )
 
@@ -57,11 +57,11 @@ class Game:
         formatted_score_text = self._right_justify_text(score_text) + "\n"
 
         board_rows, board_cols = self.board.get_dimensions()
-        col_offset = (self.renderer.cols - board_cols) // 2
-        row_offset = (self.renderer.rows - board_rows) // 2 - 1
+        col_offset = (self.screen.cols - board_cols) // 2
+        row_offset = (self.screen.rows - board_rows) // 2 - 1
 
-        self.renderer.add_string(
-            row_offset, col_offset, formatted_score_text, self.renderer.YELLOW
+        self.screen.add_string(
+            row_offset, col_offset, formatted_score_text, self.screen.YELLOW
         )
 
     def _right_justify_text(self, text: str) -> str:
