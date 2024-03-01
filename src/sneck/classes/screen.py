@@ -6,12 +6,12 @@ class Screen:
         self._stdscr = curses.initscr()
 
         # Expose curses / stdscr methods
-        self.refresh = self._stdscr.refresh
-        self.erase = self._stdscr.erase
-        self.add_string = self._stdscr.addstr
-        self.stop = curses.endwin
-        self.get_key = self._stdscr.getkey
         self.add_char = self._stdscr.addch
+        self.add_string = self._stdscr.addstr
+        self.clear = self._stdscr.clear
+        self.get_key = self._stdscr.getkey
+        self.refresh = self._stdscr.refresh
+        self.stop = curses.endwin
         self.rows, self.cols = self._stdscr.getmaxyx()
 
         # Basic init

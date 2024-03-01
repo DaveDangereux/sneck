@@ -28,13 +28,16 @@ class Board:
     def get_cell(self, position: Position) -> str:
         return self._board[position.row][position.col]
 
+    def erase_cell(self, position: Position) -> None:
+        self._board[position.row][position.col] = " "
+
     def _make_row(self, left_char: str, middle_char: str, right_char: str) -> list[str]:
         row = [middle_char] * self._cols
         row[0] = left_char
         row[-1] = right_char
         return row
 
-    def make_game_board(self) -> None:
+    def initialise_playing_board(self) -> None:
         top_row = self._make_row(
             box_chars["top_left"], box_chars["horizontal_bar"], box_chars["top_right"]
         )
@@ -54,7 +57,7 @@ class Board:
         self._board[-1] = bottom_row
 
     def make_title_screen(self):
-        self.make_game_board()
+        self.initialise_playing_board()
 
         title_text = ["S N A K E", "Press any key to play"]
         self._centre_on_board(title_text)
@@ -62,4 +65,4 @@ class Board:
     def _centre_on_board(self, text: list[str]) -> None: ...
 
     def make_game_over(self):
-        self.make_game_board()
+        self.initialise_playing_board()

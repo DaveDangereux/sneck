@@ -15,8 +15,7 @@ class GameOverState(GameState):
         self.game.board.make_game_over()
 
         while self.state_manager.state == self:
-            self.game.screen.erase()
-            self.game.draw_board_to_screen()
+            self.game.add_board_to_screen()
             self.game.screen.refresh()
             time.sleep(self.game.frame_duration)
             self._process_user_input()

@@ -8,7 +8,6 @@ class Game:
     def __init__(self, fps=8):
         self._fps = fps
 
-        self.game_counter = 0
         self.score = 0
         self.frame_duration = 1.0 / fps
 
@@ -16,21 +15,19 @@ class Game:
         self.screen = Screen()
         self.state_manager = StateManager(self)
 
-        self.disable_animation()
-
     def run(self) -> None:
         while True:
             self.state_manager.run()
 
     def disable_animation(self) -> None:
-        self.screen.delay_for_input()
         self.frame_duration = 0
+        self.screen.delay_for_input()
 
     def enable_animation(self) -> None:
-        self.screen.no_delay_for_input()
         self.frame_duration = 1.0 / self._fps
+        self.screen.no_delay_for_input()
 
-    def draw_board_to_screen(self) -> None:
+    def add_board_to_screen(self) -> None:
         # TODO: Protect against exceptions due to the terminal being too small
         # to draw the full string
         board_rows, board_cols = self.board.get_dimensions()
@@ -52,7 +49,7 @@ class Game:
                     row_index + row_offset, char_index + col_offset, char, colour
                 )
 
-    def draw_score_to_screen(self) -> None:
+    def add_score_to_screen(self) -> None:
         score_text = f"Score: {self.score:03d}"
         formatted_score_text = self._right_justify_text(score_text) + "\n"
 
@@ -63,6 +60,12 @@ class Game:
         self.screen.add_string(
             row_offset, col_offset, formatted_score_text, self.screen.YELLOW
         )
+
+    def add_debug_info_to_screen(self, text: str) -> None:
+        board_rows, _ = self.board.get_dimensions()
+        row_offset = (self.screen.rows - board_rows) // 2 + board_rows
+
+        self.screen.add_string(row_offset, 40, text)
 
     def _right_justify_text(self, text: str) -> str:
         _, width = self.board.get_dimensions()

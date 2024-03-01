@@ -16,32 +16,48 @@ class PlayingState(GameState):
 
         self.snake = Snake(position=self.game.board.get_center())
 
-        # self.game.enable_animation()
+        self.game.board.initialise_playing_board()
+        self.game.score = 0
+        self.game_over = False
+        self._add_fruit_to_board()
+        self.game.enable_animation()
 
     def run(self):
-        self._reset_game_variables()
-        self._place_fruit()
-
         while self.state_manager.state == self:
-            # TODO: Fix bug where fruit is eaten too quickly and doesn't
-            # respawn
-            self.game.screen.erase()
-            self.game.game_counter += 1
-            self._process_snake_graphic()
-            self.game.draw_score_to_screen()
-            self.game.draw_board_to_screen()
-            self.game.screen.refresh()
-            time.sleep(self.game.frame_duration)
             self._process_user_input()
-            self.snake.move()
+            self.snake.update_head_position()
+            self._check_for_collision()
+            if self.game_over:
+                self.state_manager.transition_to_game_over()
+                return
+            self._update_board()
+            time.sleep(self.game.frame_duration)
 
-    def _reset_game_variables(self):
-        self.game.board.make_game_board()
-        self.snake.reset_snake()
-        self.game.game_counter = 0
-        self.game.score = 0
+    def _check_for_collision(self) -> None:
+        head_position = self.snake.get_head_position()
+        target_cell_value = self.game.board.get_cell(head_position)
 
-    def _place_fruit(self) -> None:
+        if target_cell_value == " ":
+            return
+        elif target_cell_value == fruit:
+            self._add_fruit_to_board()
+            self.snake.increase_length()
+            self.game.score += 1
+        else:
+            self.game_over = True
+
+    def _update_board(self) -> None:
+        self._write_head_to_board()
+        self._cleanup_tail()
+        self.game.add_board_to_screen()
+        self.game.add_score_to_screen()
+        self.game.screen.refresh()
+
+    def _cleanup_tail(self) -> None:
+        if len(self.snake.body_positions) > self.snake.get_length():
+            self.game.board.erase_cell(self.snake.body_positions.pop(0))
+
+    def _add_fruit_to_board(self) -> None:
         rows, cols = self.game.board.get_dimensions()
 
         while True:
@@ -49,31 +65,15 @@ class PlayingState(GameState):
                 random.randint(0, rows - 1), random.randint(0, cols - 1)
             )
             cell_value = self.game.board.get_cell(random_cell)
-            if cell_value == " ":
+            if cell_value == " " and random_cell != self.snake.get_head_position():
                 self.game.board.write_cell(random_cell, fruit)
                 return
 
-    def _process_snake_graphic(self) -> None:
-        game_counter = self.game.game_counter
-        snake_length = self.snake.get_length()
-        is_fully_moved_into_board = game_counter > snake_length
-
-        if is_fully_moved_into_board:
-            self._erase_old_tail()
-
-        new_head_position = self.snake.get_head_position()
-        head_char = self.snake.head_char
-        target_cell_value = self.game.board.get_cell(new_head_position)
-        target_cell_is_empty = target_cell_value == " "
-
-        if not target_cell_is_empty:
-            self._handle_collision(target_cell_value)
-
-        self.game.board.write_cell(new_head_position, head_char)
+    def _write_head_to_board(self) -> None:
+        head_position = self.snake.get_head_position()
+        self.game.board.write_cell(head_position, self.snake.head_char)
 
     def _process_user_input(self) -> None:
-        set_snake_direction = self.snake.set_direction
-
         try:
             key = self.game.screen.get_key()
         except Exception:
@@ -82,25 +82,12 @@ class PlayingState(GameState):
         match key:
             case "q":
                 self.game.screen.stop()
-
                 exit(0)
             case "h":
-                set_snake_direction(Direction.LEFT)
+                self.snake.set_direction(Direction.LEFT)
             case "j":
-                set_snake_direction(Direction.DOWN)
+                self.snake.set_direction(Direction.DOWN)
             case "k":
-                set_snake_direction(Direction.UP)
+                self.snake.set_direction(Direction.UP)
             case "l":
-                set_snake_direction(Direction.RIGHT)
-
-    def _erase_old_tail(self):
-        old_tail_position = self.snake.get_old_tail_position()
-        self.game.board.write_cell(old_tail_position, " ")
-
-    def _handle_collision(self, value: str) -> None:
-        if value == fruit:
-            self._place_fruit()
-            self.snake.increase_length()
-            self.game.score += 1
-        else:
-            self.state_manager.transition_to_game_over()
+                self.snake.set_direction(Direction.RIGHT)
