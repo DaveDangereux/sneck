@@ -16,6 +16,8 @@ class PlayingState(GameState):
 
         self.snake = Snake(position=self.game.board.get_center())
 
+        # self.game.enable_animation()
+
     def run(self):
         self._reset_game_variables()
         self._place_fruit()

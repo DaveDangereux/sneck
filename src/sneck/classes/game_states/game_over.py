@@ -7,21 +7,23 @@ from ...protocols.state_manager_context import StateManagerContext
 class GameOverState(GameState):
     def __init__(self, state_manager: StateManagerContext):
         self.state_manager = state_manager
-        self.game_context = state_manager.game
+        self.game = state_manager.game
+
+        self.game.disable_animation()
 
     def run(self):
-        self.game_context.board.make_game_over()
+        self.game.board.make_game_over()
 
         while self.state_manager.state == self:
-            self.game_context.renderer.erase()
-            self.game_context.draw_board_to_screen()
-            self.game_context.renderer.refresh()
-            time.sleep(self.game_context.frame_duration)
+            self.game.renderer.erase()
+            self.game.draw_board_to_screen()
+            self.game.renderer.refresh()
+            time.sleep(self.game.frame_duration)
             self._process_user_input()
 
     def _process_user_input(self) -> None:
         try:
-            key = self.game_context.renderer.get_key()
+            key = self.game.renderer.get_key()
         except Exception:
             key = ""
 

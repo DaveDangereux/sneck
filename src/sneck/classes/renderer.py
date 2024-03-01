@@ -39,3 +39,9 @@ class Renderer:
         self.MAGENTA = curses.color_pair(7)
 
         self._stdscr.bkgd(" ", self.WHITE)
+
+    def delay_for_input(self):
+        self._stdscr.nodelay(False)
+
+    def no_delay_for_input(self):
+        self._stdscr.nodelay(True)

@@ -6,6 +6,8 @@ from .state_manager import StateManager
 
 class Game:
     def __init__(self, fps=8):
+        self._fps = fps
+
         self.game_counter = 0
         self.score = 0
         self.frame_duration = 1.0 / fps
@@ -14,9 +16,19 @@ class Game:
         self.renderer = Renderer()
         self.state_manager = StateManager(self)
 
+        self.disable_animation()
+
     def run(self) -> None:
         while True:
             self.state_manager.run()
+
+    def disable_animation(self) -> None:
+        self.renderer.delay_for_input()
+        self.frame_duration = 0
+
+    def enable_animation(self) -> None:
+        self.renderer.no_delay_for_input()
+        self.frame_duration = 1.0 / self._fps
 
     def draw_board_to_screen(self) -> None:
         # TODO: Protect against exceptions due to the terminal being too small

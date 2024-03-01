@@ -11,11 +11,6 @@ class Board:
         self._cols = cols
         self._board = []
         self.make_title_screen()
-        self._board_string = ""
-        self._refresh_board_string()
-
-    def __str__(self):
-        return self._board_string
 
     def get_center(self) -> Position:
         return Position(self._rows // 2, self._cols // 2)
@@ -29,7 +24,6 @@ class Board:
 
     def write_cell(self, position: Position, char: str) -> None:
         self._board[position.row][position.col] = char
-        self._refresh_board_string()
 
     def get_cell(self, position: Position) -> str:
         return self._board[position.row][position.col]
@@ -69,6 +63,3 @@ class Board:
 
     def make_game_over(self):
         self.make_game_board()
-
-    def _refresh_board_string(self) -> None:
-        self._board_string = "\n".join(["".join(row) for row in self._board]) + "\n"
