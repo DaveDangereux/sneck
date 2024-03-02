@@ -1,7 +1,6 @@
-import time
-
 from ...protocols.game_state import GameState
 from ...protocols.state_manager_context import StateManagerContext
+from ..painter import Painter
 
 
 class GameOverState(GameState):
@@ -12,12 +11,24 @@ class GameOverState(GameState):
         self.game.disable_animation()
 
     def run(self):
-        self.game.board.make_game_over()
+        self.game.screen.erase()
+        self.game.board.clear()
+        Painter.paint_centre_text(
+            self.game.board,
+            [
+                "G A M E  O V E R",
+                "",
+                f"Score: {self.game.score:03d}",
+                "",
+                "Press space",
+                "to continue",
+            ],
+        )
+
+        self.game.add_board_to_screen()
+        self.game.screen.refresh()
 
         while self.state_manager.state == self:
-            self.game.add_board_to_screen()
-            self.game.screen.refresh()
-            time.sleep(self.game.frame_duration)
             self._process_user_input()
 
     def _process_user_input(self) -> None:
@@ -26,5 +37,5 @@ class GameOverState(GameState):
         except Exception:
             key = ""
 
-        if key != "":
+        if key == " ":
             self.state_manager.transition_to_title_screen()

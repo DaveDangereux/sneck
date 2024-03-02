@@ -8,7 +8,7 @@ class Screen:
         # Expose curses / stdscr methods
         self.add_char = self._stdscr.addch
         self.add_string = self._stdscr.addstr
-        self.clear = self._stdscr.clear
+        self.erase = self._stdscr.erase
         self.get_key = self._stdscr.getkey
         self.refresh = self._stdscr.refresh
         self.stop = curses.endwin

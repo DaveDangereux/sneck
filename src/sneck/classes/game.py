@@ -5,7 +5,7 @@ from .state_manager import StateManager
 
 
 class Game:
-    def __init__(self, fps=8):
+    def __init__(self, fps=7):
         self._fps = fps
 
         self.score = 0

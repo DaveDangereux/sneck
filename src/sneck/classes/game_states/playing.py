@@ -5,6 +5,7 @@ from ...assets.ascii_chars import fruit
 from ...enumerations.direction import Direction
 from ...protocols.game_state import GameState
 from ...protocols.state_manager_context import StateManagerContext
+from ..painter import Painter
 from ..position import Position
 from ..snake import Snake
 
@@ -12,17 +13,20 @@ from ..snake import Snake
 class PlayingState(GameState):
     def __init__(self, state_manager: StateManagerContext):
         self.state_manager = state_manager
+
         self.game = state_manager.game
-
-        self.snake = Snake(position=self.game.board.get_center())
-
-        self.game.board.initialise_playing_board()
         self.game.score = 0
         self.game_over = False
-        self._add_fruit_to_board()
+        self.snake = Snake(position=self.game.board.get_center())
+
         self.game.enable_animation()
 
     def run(self):
+        self.game.screen.erase()
+        self.game.board.clear()
+        Painter.paint_border(self.game.board)
+        self._add_fruit_to_board()
+
         while self.state_manager.state == self:
             self._process_user_input()
             self.snake.update_head_position()

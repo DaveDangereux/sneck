@@ -1,16 +1,21 @@
-from copy import copy
-
-from ..assets.ascii_chars import box_chars
 from .position import Position
 
 
 class Board:
-    def __init__(self, rows=18, cols=24):
+    def __init__(self, rows=15, cols=22):
         # TODO: Prevent these values from exceeding the terminal dimensions
         self._rows = rows
         self._cols = cols
-        self._board = []
-        self.make_title_screen()
+        self.clear()
+
+    def __getitem__(self, key) -> list[str]:
+        return self._board[key]
+
+    def __setitem__(self, key, value: list[str]) -> None:
+        self._board[key] = value
+
+    def clear(self):
+        self._board = [[" " for _ in range(self._cols)] for _ in range(self._rows)]
 
     def get_center(self) -> Position:
         return Position(self._rows // 2, self._cols // 2)
@@ -37,27 +42,27 @@ class Board:
         row[-1] = right_char
         return row
 
-    def initialise_playing_board(self) -> None:
-        top_row = self._make_row(
-            box_chars["top_left"], box_chars["horizontal_bar"], box_chars["top_right"]
-        )
-        middle_row = self._make_row(
-            box_chars["vertical_bar"], " ", box_chars["vertical_bar"]
-        )
-        bottom_row = self._make_row(
-            box_chars["bottom_left"],
-            box_chars["horizontal_bar"],
-            box_chars["bottom_right"],
-        )
-
-        self._board = []
-        for _ in range(self._rows):
-            self._board.append(copy(middle_row))
-        self._board[0] = top_row
-        self._board[-1] = bottom_row
+    # def make_playing_board(self) -> None:
+    #     top_row = self._make_row(
+    #         box_chars["top_left"], box_chars["horizontal_bar"], box_chars["top_right"]
+    #     )
+    #     middle_row = self._make_row(
+    #         box_chars["vertical_bar"], " ", box_chars["vertical_bar"]
+    #     )
+    #     bottom_row = self._make_row(
+    #         box_chars["bottom_left"],
+    #         box_chars["horizontal_bar"],
+    #         box_chars["bottom_right"],
+    #     )
+    #
+    #     self._board = []
+    #     for _ in range(self._rows):
+    #         self._board.append(copy(middle_row))
+    #     self._board[0] = top_row
+    #     self._board[-1] = bottom_row
 
     def make_title_screen(self):
-        self.initialise_playing_board()
+        self.make_playing_board()
 
         title_text = ["S N A K E", "Press any key to play"]
         self._centre_on_board(title_text)
@@ -65,4 +70,4 @@ class Board:
     def _centre_on_board(self, text: list[str]) -> None: ...
 
     def make_game_over(self):
-        self.initialise_playing_board()
+        self.make_playing_board()

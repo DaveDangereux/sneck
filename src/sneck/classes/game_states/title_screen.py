@@ -2,6 +2,7 @@ import time
 
 from ...protocols.game_state import GameState
 from ...protocols.state_manager_context import StateManagerContext
+from ..painter import Painter
 
 
 class TitleScreenState(GameState):
@@ -12,12 +13,16 @@ class TitleScreenState(GameState):
         self.game.disable_animation()
 
     def run(self):
-        self.game.board.make_title_screen()
+        self.game.screen.erase()
+        self.game.board.clear()
+        Painter.paint_centre_text(
+            self.game.board, ["S N A K E", "Press space", "to play"]
+        )
+
+        self.game.add_board_to_screen()
+        self.game.screen.refresh()
 
         while self.state_manager.state == self:
-            self.game.add_board_to_screen()
-            self.game.screen.refresh()
-            time.sleep(self.game.frame_duration)
             self._process_user_input()
 
     def _process_user_input(self):
