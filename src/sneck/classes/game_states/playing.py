@@ -19,7 +19,7 @@ class PlayingState(GameState):
         self.game_over = False
         self.snake = Snake(position=self.game.board.get_center())
 
-        self.game.enable_animation()
+        self.game.screen.enable_animation()
 
     def run(self):
         self.game.screen.erase()
@@ -53,8 +53,8 @@ class PlayingState(GameState):
     def _update_board(self) -> None:
         self._write_head_to_board()
         self._cleanup_tail()
-        self.game.add_board_to_screen()
-        self.game.add_score_to_screen()
+        self.game.screen.add_board(self.game.board)
+        self.game.screen.add_score(self.game.board, self.game.score)
         self.game.screen.refresh()
 
     def _cleanup_tail(self) -> None:

@@ -2,7 +2,7 @@ from .position import Position
 
 
 class Board:
-    def __init__(self, rows=15, cols=22):
+    def __init__(self, rows, cols):
         # TODO: Prevent these values from exceeding the terminal dimensions
         self._rows = rows
         self._cols = cols
@@ -22,6 +22,9 @@ class Board:
 
     def get_dimensions(self) -> tuple[int, int]:
         return self._rows, self._cols
+
+    def get_width(self) -> int:
+        return self._cols
 
     def get_lines(self):
         for row in self._board:

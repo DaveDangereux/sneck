@@ -8,7 +8,7 @@ class GameOverState(GameState):
         self.state_manager = state_manager
         self.game = state_manager.game
 
-        self.game.disable_animation()
+        self.game.screen.disable_animation()
 
     def run(self):
         self.game.screen.erase()
@@ -25,7 +25,7 @@ class GameOverState(GameState):
             ],
         )
 
-        self.game.add_board_to_screen()
+        self.game.screen.add_board(self.game.board)
         self.game.screen.refresh()
 
         while self.state_manager.state == self:
