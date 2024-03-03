@@ -37,21 +37,34 @@ class PlayingState(GameState):
             self._update_board()
             time.sleep(self.game.frame_duration)
 
-    def _display_score_bar(self) -> None:
+    def _update_board(self) -> None:
+        self._write_head_to_board()
+        self._cleanup_tail()
+        self.game.screen.add_board(self.game.board)
+        self._update_score_bar()
+        self.game.screen.refresh()
+
+    def _cleanup_tail(self) -> None:
+        if len(self.snake.body_positions) > self.snake.get_length():
+            self.game.board.erase_cell(self.snake.body_positions.pop(0))
+
+    def _write_head_to_board(self) -> None:
+        head_position = self.snake.get_head_position()
+        self.game.board.write_cell(head_position, self.snake.head_char)
+
+    def _update_score_bar(self) -> None:
         text_width = self.game.board.get_width()
-        high_score_text = f"HIGH: {self.game.score_board_data.entries[0].score:04d}"
+        current_high_score = self.game.score_board_data.entries[0].score
+
+        high_score_text = f"HIGH: {current_high_score:04d}"
+
         score_text = f"SCORE: {self.game.score:04d}".ljust(
             text_width - len(high_score_text)
         )
+
         score_bar_text = score_text + high_score_text + "\n"
 
-        board_rows, board_cols = self.game.board.get_dimensions()
-        col_offset = (self.game.screen._cols - board_cols) // 2
-        row_offset = (self.game.screen._rows - board_rows) // 2 - 1
-
-        self.game.screen.add_string(
-            row_offset, col_offset, score_bar_text, self.game.screen.YELLOW
-        )
+        self.game.screen.add_score_bar(score_bar_text)
 
     def _check_for_collision(self) -> None:
         head_position = self.snake.get_head_position()
@@ -66,17 +79,6 @@ class PlayingState(GameState):
         else:
             self.game_over = True
 
-    def _update_board(self) -> None:
-        self._write_head_to_board()
-        self._cleanup_tail()
-        self.game.screen.add_board(self.game.board)
-        self._display_score_bar()
-        self.game.screen.refresh()
-
-    def _cleanup_tail(self) -> None:
-        if len(self.snake.body_positions) > self.snake.get_length():
-            self.game.board.erase_cell(self.snake.body_positions.pop(0))
-
     def _add_fruit_to_board(self) -> None:
         rows, cols = self.game.board.get_dimensions()
 
@@ -88,10 +90,6 @@ class PlayingState(GameState):
             if cell_value == " " and random_cell != self.snake.get_head_position():
                 self.game.board.write_cell(random_cell, fruit)
                 return
-
-    def _write_head_to_board(self) -> None:
-        head_position = self.snake.get_head_position()
-        self.game.board.write_cell(head_position, self.snake.head_char)
 
     def _process_user_input(self) -> None:
         try:

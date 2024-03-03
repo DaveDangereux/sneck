@@ -5,7 +5,7 @@ from .board import Board
 
 
 class Screen:
-    def __init__(self):
+    def __init__(self, board_rows: int, board_cols: int):
         self._stdscr = curses.initscr()
 
         # Expose curses / stdscr methods
@@ -16,6 +16,9 @@ class Screen:
         self.refresh = self._stdscr.refresh
         self.stop = curses.endwin
         self._rows, self._cols = self._stdscr.getmaxyx()
+
+        self._board_row_offset = (self._rows - board_rows) // 2
+        self._board_col_offset = (self._cols - board_cols) // 2
 
         # Basic init
         curses.noecho()
@@ -50,12 +53,6 @@ class Screen:
         self._stdscr.nodelay(True)
 
     def add_board(self, board: Board) -> None:
-        # TODO: Protect against exceptions due to the terminal being too small
-        # to draw the full string
-        board_rows, board_cols = board.get_dimensions()
-        col_offset = (self._cols - board_cols) // 2
-        row_offset = (self._rows - board_rows) // 2
-
         for row_index, row in enumerate(board.get_lines()):
             for char_index, char in enumerate(row):
                 colour = self.WHITE
@@ -68,15 +65,19 @@ class Screen:
                     colour = self.RED
 
                 self.add_char(
-                    row_index + row_offset, char_index + col_offset, char, colour
+                    row_index + self._board_row_offset,
+                    char_index + self._board_col_offset,
+                    char,
+                    colour,
                 )
 
-    # def add_bar(self, board: Board, score: int) -> None:
-    #     board_rows, board_cols = board.get_dimensions()
-    #     col_offset = (self._cols - board_cols) // 2
-    #     row_offset = (self._rows - board_rows) // 2 - 1
-    #
-    #     self.add_string(row_offset, col_offset, formatted_score_text, self.YELLOW)
+    def add_score_bar(self, score_bar_text: str) -> None:
+        self.add_string(
+            self._board_row_offset - 1,
+            self._board_col_offset,
+            score_bar_text,
+            self.YELLOW,
+        )
 
     def add_debug_info(self, board: Board, text: str) -> None:
         board_rows, _ = board.get_dimensions()

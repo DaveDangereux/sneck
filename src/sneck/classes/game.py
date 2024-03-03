@@ -15,7 +15,7 @@ class Game:
         self.score_board_data = ScoreBoardData()
 
         self.board = Board(self.ROWS, self.COLS)
-        self.screen = Screen()
+        self.screen = Screen(self.ROWS, self.COLS)
         self.state_manager = StateManager(self)
 
     def run(self) -> None:
