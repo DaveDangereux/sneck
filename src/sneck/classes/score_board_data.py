@@ -14,7 +14,7 @@ class ScoreBoardData:
                 data = yaml.safe_load(file)
                 if data:
                     self.entries = [
-                        ScoreBoardEntry(entry["player"] or "", entry["points"] or 0)
+                        ScoreBoardEntry(entry["player"] or "", entry["score"] or 0)
                         for entry in data
                     ]
         except FileNotFoundError:
@@ -25,7 +25,7 @@ class ScoreBoardData:
 
     def get_rank(self, score: int) -> int:
         for index, entry in enumerate(self.entries):
-            if score > entry.points:
+            if score > entry.score:
                 return index + 1
         return 0
 

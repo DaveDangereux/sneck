@@ -71,17 +71,12 @@ class Screen:
                     row_index + row_offset, char_index + col_offset, char, colour
                 )
 
-    def add_score(self, board: Board, score: int) -> None:
-        score_text = f"SCORE: {score:04d}"
-        formatted_score_text = (
-            self._right_justify_text(score_text, board.get_width()) + "\n"
-        )
-
-        board_rows, board_cols = board.get_dimensions()
-        col_offset = (self._cols - board_cols) // 2
-        row_offset = (self._rows - board_rows) // 2 - 1
-
-        self.add_string(row_offset, col_offset, formatted_score_text, self.YELLOW)
+    # def add_bar(self, board: Board, score: int) -> None:
+    #     board_rows, board_cols = board.get_dimensions()
+    #     col_offset = (self._cols - board_cols) // 2
+    #     row_offset = (self._rows - board_rows) // 2 - 1
+    #
+    #     self.add_string(row_offset, col_offset, formatted_score_text, self.YELLOW)
 
     def add_debug_info(self, board: Board, text: str) -> None:
         board_rows, _ = board.get_dimensions()

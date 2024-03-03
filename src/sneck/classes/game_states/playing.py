@@ -37,6 +37,22 @@ class PlayingState(GameState):
             self._update_board()
             time.sleep(self.game.frame_duration)
 
+    def _display_score_bar(self) -> None:
+        text_width = self.game.board.get_width()
+        high_score_text = f"HIGH: {self.game.score_board_data.entries[0].score:04d}"
+        score_text = f"SCORE: {self.game.score:04d}".ljust(
+            text_width - len(high_score_text)
+        )
+        score_bar_text = score_text + high_score_text + "\n"
+
+        board_rows, board_cols = self.game.board.get_dimensions()
+        col_offset = (self.game.screen._cols - board_cols) // 2
+        row_offset = (self.game.screen._rows - board_rows) // 2 - 1
+
+        self.game.screen.add_string(
+            row_offset, col_offset, score_bar_text, self.game.screen.YELLOW
+        )
+
     def _check_for_collision(self) -> None:
         head_position = self.snake.get_head_position()
         target_cell_value = self.game.board.get_cell(head_position)
@@ -54,7 +70,7 @@ class PlayingState(GameState):
         self._write_head_to_board()
         self._cleanup_tail()
         self.game.screen.add_board(self.game.board)
-        self.game.screen.add_score(self.game.board, self.game.score)
+        self._display_score_bar()
         self.game.screen.refresh()
 
     def _cleanup_tail(self) -> None:

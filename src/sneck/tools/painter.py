@@ -37,7 +37,7 @@ def paint_scores(board: Board, score_board_entries: list[ScoreBoardEntry]) -> No
     for index, entry in enumerate(score_board_entries):
         rank = index + 1
         player_text = entry.player or ""
-        points_text = f"{entry.points:04d}"
+        points_text = f"{entry.score:04d}"
 
         score_text = (
             f"{str(rank).rjust(2, " ")}.{spacing}{points_text}{spacing}{player_text.ljust(3, " ")}"
