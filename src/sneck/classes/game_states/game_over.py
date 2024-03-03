@@ -1,6 +1,6 @@
 from ...protocols.game_state import GameState
 from ...protocols.state_manager_context import StateManagerContext
-from ..painter import Painter
+from ...tools import painter
 
 
 class GameOverState(GameState):
@@ -13,12 +13,12 @@ class GameOverState(GameState):
     def run(self):
         self.game.screen.erase()
         self.game.board.clear()
-        Painter.paint_centre_text(
+        painter.paint_centre_text(
             self.game.board,
             [
                 "G A M E  O V E R",
                 "",
-                f"Score: {self.game.score:03d}",
+                f"SCORE: {self.game.score:04d}",
                 "",
                 "Press space",
                 "to continue",
@@ -38,4 +38,4 @@ class GameOverState(GameState):
             key = ""
 
         if key == " ":
-            self.state_manager.transition_to_title_screen()
+            self.state_manager.transition_to_score_board()

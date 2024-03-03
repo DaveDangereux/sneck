@@ -1,8 +1,6 @@
-import time
-
 from ...protocols.game_state import GameState
 from ...protocols.state_manager_context import StateManagerContext
-from ..painter import Painter
+from ...tools import painter
 
 
 class TitleScreenState(GameState):
@@ -15,7 +13,7 @@ class TitleScreenState(GameState):
     def run(self):
         self.game.screen.erase()
         self.game.board.clear()
-        Painter.paint_centre_text(
+        painter.paint_centre_text(
             self.game.board, ["S N A K E", "Press space", "to play"]
         )
 
@@ -26,7 +24,11 @@ class TitleScreenState(GameState):
             self._process_user_input()
 
     def _process_user_input(self):
-        key = self.game.screen.get_key()
+        key = self.game.screen.get_key().upper()
 
-        if key == " ":
-            self.state_manager.transition_to_playing()
+        match key:
+            case "Q":
+                self.game.screen.stop()
+                exit(0)
+            case " ":
+                self.state_manager.transition_to_playing()

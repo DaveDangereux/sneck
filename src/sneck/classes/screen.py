@@ -72,7 +72,7 @@ class Screen:
                 )
 
     def add_score(self, board: Board, score: int) -> None:
-        score_text = f"Score: {score:03d}"
+        score_text = f"SCORE: {score:04d}"
         formatted_score_text = (
             self._right_justify_text(score_text, board.get_width()) + "\n"
         )

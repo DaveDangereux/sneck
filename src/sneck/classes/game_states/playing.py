@@ -5,7 +5,7 @@ from ...assets.ascii_chars import fruit
 from ...enumerations.direction import Direction
 from ...protocols.game_state import GameState
 from ...protocols.state_manager_context import StateManagerContext
-from ..painter import Painter
+from ...tools import painter
 from ..position import Position
 from ..snake import Snake
 
@@ -24,7 +24,7 @@ class PlayingState(GameState):
     def run(self):
         self.game.screen.erase()
         self.game.board.clear()
-        Painter.paint_border(self.game.board)
+        painter.paint_border(self.game.board)
         self._add_fruit_to_board()
 
         while self.state_manager.state == self:
@@ -46,7 +46,7 @@ class PlayingState(GameState):
         elif target_cell_value == fruit:
             self._add_fruit_to_board()
             self.snake.increase_length()
-            self.game.score += 1
+            self.game.score += 10
         else:
             self.game_over = True
 
@@ -79,19 +79,16 @@ class PlayingState(GameState):
 
     def _process_user_input(self) -> None:
         try:
-            key = self.game.screen.get_key()
+            key = self.game.screen.get_key().upper()
         except Exception:
             key = ""
 
         match key:
-            case "q":
-                self.game.screen.stop()
-                exit(0)
-            case "h":
+            case "H":
                 self.snake.set_direction(Direction.LEFT)
-            case "j":
+            case "J":
                 self.snake.set_direction(Direction.DOWN)
-            case "k":
+            case "K":
                 self.snake.set_direction(Direction.UP)
-            case "l":
+            case "L":
                 self.snake.set_direction(Direction.RIGHT)

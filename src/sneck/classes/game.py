@@ -1,4 +1,5 @@
 from .board import Board
+from .score_board_data import ScoreBoardData
 from .screen import Screen
 from .state_manager import StateManager
 
@@ -11,6 +12,7 @@ class Game:
     def __init__(self):
         self.score = 0
         self.frame_duration = 1.0 / self.FPS
+        self.score_board_data = ScoreBoardData()
 
         self.board = Board(self.ROWS, self.COLS)
         self.screen = Screen()

@@ -4,6 +4,7 @@ version = "0.0.0"
 description = "A basic recreation of the classic game."
 license = { text = "MIT" }
 authors = [{ name = "Dave Jordan", email = "le_dangereux@hotmail.co.uk"}]
+dependencies = ["pyyaml == 6.0.1"]
 
 [build-system]
 requires = ["setuptools", "setuptools-scm"]
