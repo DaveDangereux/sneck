@@ -10,25 +10,29 @@ class TitleScreenState(GameState):
         self.state_manager = state_manager
         self.game = state_manager.game
 
+        self.game.screen.palette.load_default_theme()
         self.game.screen.disable_animation()
 
     def run(self):
         self.game.screen.erase()
         self.game.board.clear()
-        painter.paint_centre_text(
-            self.game.board,
-            [
-                Text("S N A K E", TextType.TITLE),
-                Text("Press space", TextType.INFO),
-                Text("to play", TextType.INFO),
-            ],
-        )
+        self._make_title_text()
 
         self.game.screen.add_board(self.game.board)
         self.game.screen.refresh()
 
         while self.state_manager.state == self:
             self._process_user_input()
+
+    def _make_title_text(self):
+        painter.paint_centre_text(
+            self.game.board,
+            [
+                Text("S N E C K", TextType.TITLE),
+                Text("Press space", TextType.INFO),
+                Text("to play", TextType.INFO),
+            ],
+        )
 
     def _process_user_input(self):
         key = self.game.screen.get_key().upper()

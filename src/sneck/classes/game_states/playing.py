@@ -21,6 +21,7 @@ class PlayingState(GameState):
         self.game_over = False
         self.snake = Snake(position=self.game.board.get_center())
 
+        self.game.screen.palette.load_default_theme()
         self.game.screen.enable_animation()
 
     def run(self):
@@ -28,6 +29,7 @@ class PlayingState(GameState):
         self.game.board.clear()
         painter.paint_border(self.game.board)
         self._add_fruit_to_board()
+        self._update_board()
 
         while self.state_manager.state == self:
             self._process_user_input()
@@ -78,6 +80,8 @@ class PlayingState(GameState):
             self._add_fruit_to_board()
             self.snake.increase_length()
             self.game.score += 10
+            if self.game.score % 200 == 0:
+                self.game.screen.palette.load_next_theme()
         else:
             self.game_over = True
 

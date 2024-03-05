@@ -10,6 +10,7 @@ class GameOverState(GameState):
         self.state_manager = state_manager
         self.game = state_manager.game
 
+        self.game.screen.palette.load_default_theme()
         self.game.screen.disable_animation()
 
     def run(self):
