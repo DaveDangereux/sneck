@@ -3,11 +3,13 @@ import time
 
 from ...assets.ascii_chars import fruit
 from ...enumerations.direction import Direction
+from ...enumerations.text_type import TextType
 from ...protocols.game_state import GameState
 from ...protocols.state_manager_context import StateManagerContext
 from ...tools import painter
 from ..position import Position
 from ..snake import Snake
+from ..text import Text
 
 
 class PlayingState(GameState):
@@ -64,13 +66,13 @@ class PlayingState(GameState):
 
         score_bar_text = score_text + high_score_text + "\n"
 
-        self.game.screen.add_score_bar(score_bar_text)
+        self.game.screen.add_score_bar(Text(score_bar_text, TextType.SCORE))
 
     def _check_for_collision(self) -> None:
         head_position = self.snake.get_head_position()
         target_cell_value = self.game.board.get_cell(head_position)
 
-        if target_cell_value == " ":
+        if target_cell_value == Text(" "):
             return
         elif target_cell_value == fruit:
             self._add_fruit_to_board()
@@ -87,7 +89,10 @@ class PlayingState(GameState):
                 random.randint(0, rows - 1), random.randint(0, cols - 1)
             )
             cell_value = self.game.board.get_cell(random_cell)
-            if cell_value == " " and random_cell != self.snake.get_head_position():
+            if (
+                cell_value == Text(" ")
+                and random_cell != self.snake.get_head_position()
+            ):
                 self.game.board.write_cell(random_cell, fruit)
                 return
 

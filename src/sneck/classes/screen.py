@@ -1,7 +1,8 @@
 import curses
 
-from ..assets.ascii_chars import box_chars, fruit, snake_chars
 from .board import Board
+from .palette import Palette
+from .text import Text
 
 
 class Screen:
@@ -26,25 +27,8 @@ class Screen:
         self._stdscr.nodelay(True)
 
         # Initialise colour
-        curses.start_color()
-
-        curses.init_pair(1, curses.COLOR_WHITE, 16)
-        curses.init_pair(2, curses.COLOR_RED, 16)
-        curses.init_pair(3, curses.COLOR_YELLOW, 16)
-        curses.init_pair(4, curses.COLOR_GREEN, 16)
-        curses.init_pair(5, curses.COLOR_CYAN, 16)
-        curses.init_pair(6, curses.COLOR_BLUE, 16)
-        curses.init_pair(7, curses.COLOR_MAGENTA, 16)
-
-        self.WHITE = curses.color_pair(1)
-        self.RED = curses.color_pair(2)
-        self.YELLOW = curses.color_pair(3)
-        self.GREEN = curses.color_pair(4)
-        self.CYAN = curses.color_pair(5)
-        self.BLUE = curses.color_pair(6)
-        self.MAGENTA = curses.color_pair(7)
-
-        self._stdscr.bkgd(" ", self.WHITE)
+        self.palette = Palette()
+        self._stdscr.bkgd(" ", self.palette.WHITE)
 
     def disable_animation(self) -> None:
         self._stdscr.nodelay(False)
@@ -54,29 +38,20 @@ class Screen:
 
     def add_board(self, board: Board) -> None:
         for row_index, row in enumerate(board.get_lines()):
-            for char_index, char in enumerate(row):
-                colour = self.WHITE
-
-                if char in box_chars.values():
-                    colour = self.MAGENTA
-                elif char in snake_chars.values():
-                    colour = self.GREEN
-                elif char is fruit:
-                    colour = self.RED
-
+            for col_index, text in enumerate(row):
                 self.add_char(
                     row_index + self._board_row_offset,
-                    char_index + self._board_col_offset,
-                    char,
-                    colour,
+                    col_index + self._board_col_offset,
+                    text.value,
+                    self.palette.get_colour_from_type(text.type),
                 )
 
-    def add_score_bar(self, score_bar_text: str) -> None:
+    def add_score_bar(self, score_bar_text: Text) -> None:
         self.add_string(
             self._board_row_offset - 1,
             self._board_col_offset,
-            score_bar_text,
-            self.YELLOW,
+            score_bar_text.value,
+            self.palette.get_colour_from_type(score_bar_text.type),
         )
 
     def add_debug_info(self, board: Board, text: str) -> None:

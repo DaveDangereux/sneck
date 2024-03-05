@@ -1,6 +1,8 @@
+from ...enumerations.text_type import TextType
 from ...protocols.game_state import GameState
 from ...protocols.state_manager_context import StateManagerContext
 from ...tools import painter
+from ..text import Text
 
 
 class TitleScreenState(GameState):
@@ -14,7 +16,12 @@ class TitleScreenState(GameState):
         self.game.screen.erase()
         self.game.board.clear()
         painter.paint_centre_text(
-            self.game.board, ["S N A K E", "Press space", "to play"]
+            self.game.board,
+            [
+                Text("S N A K E", TextType.TITLE),
+                Text("Press space", TextType.INFO),
+                Text("to play", TextType.INFO),
+            ],
         )
 
         self.game.screen.add_board(self.game.board)

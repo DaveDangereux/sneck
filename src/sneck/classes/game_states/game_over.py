@@ -1,6 +1,8 @@
+from ...enumerations.text_type import TextType
 from ...protocols.game_state import GameState
 from ...protocols.state_manager_context import StateManagerContext
 from ...tools import painter
+from ..text import Text
 
 
 class GameOverState(GameState):
@@ -16,12 +18,12 @@ class GameOverState(GameState):
         painter.paint_centre_text(
             self.game.board,
             [
-                "G A M E  O V E R",
-                "",
-                f"SCORE: {self.game.score:04d}",
-                "",
-                "Press space",
-                "to continue",
+                Text("G A M E  O V E R", TextType.GAME_OVER),
+                Text(""),
+                Text(f"SCORE: {self.game.score:04d}", TextType.SCORE),
+                Text(""),
+                Text("Press space", TextType.INFO),
+                Text("to continue", TextType.INFO),
             ],
         )
 
