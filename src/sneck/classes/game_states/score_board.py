@@ -13,14 +13,14 @@ class ScoreBoardState(GameState):
         self.editing = False
         self._rank = self.game.score_board_data.get_rank(self.game.score)
 
-        if self._rank:
-            self._entry = self.game.score_board_data.insert_entry(self.game.score)
-            self.editing = True
-
         self.game.screen.palette.load_default_theme()
         self.game.screen.disable_animation()
 
     def run(self):
+        if self._rank:
+            self._entry = self.game.score_board_data.insert_entry(self.game.score)
+            self.editing = True
+
         self.game.screen.erase()
         self.game.board.clear()
         self._make_score_text()
@@ -40,11 +40,13 @@ class ScoreBoardState(GameState):
 
         for index, entry in enumerate(self.game.score_board_data.entries):
             rank = index + 1
+            is_current_player_entry = rank == self.game.score_board_data.get_rank(self.game.score)
+            entry_text_type = TextType.HIGH_SCORE_TEXT_ACTIVE if is_current_player_entry else TextType.HIGH_SCORE_TEXT
             player_text = entry.player or ""
             points_text = f"{entry.score:04d}"
 
             score_text = Text(
-                f"{str(rank).rjust(2, " ")}.{spacing}{points_text}{spacing}{player_text.ljust(3, " ")}\n", TextType.HIGH_SCORE_TEXT
+                f"{str(rank).rjust(2, " ")}.{spacing}{points_text}{spacing}{player_text.ljust(3, " ")}\n", entry_text_type
             )
 
             lines.append(score_text)

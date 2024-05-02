@@ -13,3 +13,4 @@ class DefaultTheme(Theme):
     GAME_OVER = Colour.RED
     HIGH_SCORE_TITLE = Colour.RED
     HIGH_SCORE_TEXT = Colour.WHITE
+    HIGH_SCORE_TEXT_ACTIVE = Colour.RED
