@@ -1,11 +1,23 @@
-[project]
+[tool.poetry]
 name = "sneck"
-version = "0.0.0"
-description = "A basic recreation of the classic game."
-license = { text = "MIT" }
-authors = [{ name = "Dave Jordan", email = "le_dangereux@hotmail.co.uk"}]
-dependencies = ["pyyaml == 6.0.1"]
+version = "0.1.0"
+description = "A basic recreation of the classic mobile phone game in the terminal, using Python."
+authors = ["David Jordan <le_dangereux@hotmail.co.uk>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+    { include = "sneck", from = "src" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+PyYAML = "^6.0.1"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+ruff = "^0.4.2"
+pyright = "^1.1.361"
 
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
