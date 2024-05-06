@@ -59,7 +59,3 @@ class Screen:
         row_offset = (self._rows - board_rows) // 2 + board_rows
 
         self.add_string(row_offset, 40, text)
-
-    def _right_justify_text(self, text: str, width: int) -> str:
-        left_space = " " * (width - len(text))
-        return left_space + text
