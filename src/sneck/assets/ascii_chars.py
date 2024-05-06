@@ -1,5 +1,5 @@
-from ..classes.text import Text
-from ..enumerations.text_type import TextType
+from sneck.classes.text import Text
+from sneck.enumerations import TextType
 
 box_chars = {
     "top_left": Text("╔", TextType.WALL),

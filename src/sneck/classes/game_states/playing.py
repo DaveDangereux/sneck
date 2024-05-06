@@ -1,15 +1,14 @@
 import random
 import time
 
-from ...assets.ascii_chars import fruit
-from ...enumerations.direction import Direction
-from ...enumerations.text_type import TextType
-from ...protocols.game_state import GameState
-from ...protocols.state_manager_context import StateManagerContext
-from ...tools import painter
-from ..position import Position
-from ..snake import Snake
-from ..text import Text
+from sneck.assets.ascii_chars import fruit
+from sneck.classes.position import Position
+from sneck.classes.snake import Snake
+from sneck.classes.text import Text
+from sneck.enumerations import Direction, TextType
+from sneck.protocols.game_state import GameState
+from sneck.protocols.state_manager_context import StateManagerContext
+from sneck.tools import painter
 
 
 class PlayingState(GameState):

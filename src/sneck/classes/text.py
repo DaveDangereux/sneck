@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ..enumerations.text_type import TextType
+from sneck.enumerations import TextType
 
 
 @dataclass

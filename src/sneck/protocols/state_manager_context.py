@@ -1,7 +1,7 @@
 from typing import Protocol
 
-from .game_context import GameContext
-from .game_state import GameState
+from sneck.protocols.game_context import GameContext
+from sneck.protocols.game_state import GameState
 
 
 class StateManagerContext(Protocol):

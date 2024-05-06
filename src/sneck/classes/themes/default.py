@@ -1,5 +1,5 @@
-from ...enumerations.colour import Colour
-from ...protocols.theme import Theme
+from sneck.enumerations import Colour
+from sneck.protocols.theme import Theme
 
 
 class DefaultTheme(Theme):

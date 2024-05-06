@@ -1,4 +1,5 @@
-from ...enumerations.colour import Colour
+from sneck.enumerations import Colour
+
 from .default import DefaultTheme
 
 

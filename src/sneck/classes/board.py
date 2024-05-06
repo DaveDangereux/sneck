@@ -1,6 +1,5 @@
-from ..enumerations.text_type import TextType
-from .position import Position
-from .text import Text
+from sneck.classes.position import Position
+from sneck.classes.text import Text
 
 
 class Board:

@@ -1,8 +1,8 @@
-from ...enumerations.text_type import TextType
-from ...protocols.game_state import GameState
-from ...protocols.state_manager_context import StateManagerContext
-from ...tools import painter
-from ..text import Text
+from sneck.classes.text import Text
+from sneck.enumerations import TextType
+from sneck.protocols.game_state import GameState
+from sneck.protocols.state_manager_context import StateManagerContext
+from sneck.tools import painter
 
 
 class ScoreBoardState(GameState):
@@ -35,18 +35,28 @@ class ScoreBoardState(GameState):
                 self._process_user_input()
 
     def _make_score_text(self) -> None:
-        lines: list[Text] = [Text("H I G H  S C O R E S", TextType.HIGH_SCORE_TITLE), Text("")]
+        lines: list[Text] = [
+            Text("H I G H  S C O R E S", TextType.HIGH_SCORE_TITLE),
+            Text(""),
+        ]
         spacing = " " * 2
 
         for index, entry in enumerate(self.game.score_board_data.entries):
             rank = index + 1
-            is_current_player_entry = rank == self.game.score_board_data.get_rank(self.game.score)
-            entry_text_type = TextType.HIGH_SCORE_TEXT_ACTIVE if is_current_player_entry else TextType.HIGH_SCORE_TEXT
+            is_current_player_entry = rank == self.game.score_board_data.get_rank(
+                self.game.score
+            )
+            entry_text_type = (
+                TextType.HIGH_SCORE_TEXT_ACTIVE
+                if is_current_player_entry
+                else TextType.HIGH_SCORE_TEXT
+            )
             player_text = entry.player or ""
             points_text = f"{entry.score:04d}"
 
             score_text = Text(
-                f"{str(rank).rjust(2, " ")}.{spacing}{points_text}{spacing}{player_text.ljust(3, " ")}\n", entry_text_type
+                f"{str(rank).rjust(2, " ")}.{spacing}{points_text}{spacing}{player_text.ljust(3, " ")}\n",
+                entry_text_type,
             )
 
             lines.append(score_text)

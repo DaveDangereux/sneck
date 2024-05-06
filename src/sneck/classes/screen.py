@@ -1,8 +1,8 @@
 import curses
 
-from .board import Board
-from .palette import Palette
-from .text import Text
+from sneck.classes.board import Board
+from sneck.classes.palette import Palette
+from sneck.classes.text import Text
 
 
 class Screen:

@@ -1,8 +1,8 @@
-from ...enumerations.text_type import TextType
-from ...protocols.game_state import GameState
-from ...protocols.state_manager_context import StateManagerContext
-from ...tools import painter
-from ..text import Text
+from sneck.classes.text import Text
+from sneck.enumerations import TextType
+from sneck.protocols.game_state import GameState
+from sneck.protocols.state_manager_context import StateManagerContext
+from sneck.tools import painter
 
 
 class GameOverState(GameState):
