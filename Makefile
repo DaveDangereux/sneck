@@ -1,3 +1,2 @@
 default:
-	poetry shell
-	python -m sneck
+	poetry run python -m sneck
