@@ -35,7 +35,14 @@ class Snake:
         if direction != self._OPPOSITE_DIRECTIONS[self._direction]:
             self._direction = direction
 
-    def get_next_position(self):
+    def update_head_position(self):
+        new_head_position = self._get_next_position()
+        self.body_positions.append(new_head_position)
+
+    def increase_length(self):
+        self._length += 1
+
+    def _get_next_position(self):
         next_position = copy(self.body_positions[-1])
 
         match self._direction:
@@ -49,10 +56,3 @@ class Snake:
                 next_position.row += 1
 
         return next_position
-
-    def update_head_position(self):
-        new_head_position = self.get_next_position()
-        self.body_positions.append(new_head_position)
-
-    def increase_length(self):
-        self._length += 1
