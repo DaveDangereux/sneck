@@ -1,10 +1,8 @@
-from ..protocols.game_context import GameContext
-from ..protocols.game_state import GameState
-from ..protocols.state_manager_context import StateManagerContext
-from .game_states.game_over import GameOverState
-from .game_states.playing import PlayingState
-from .game_states.score_board import ScoreBoardState
-from .game_states.title_screen import TitleScreenState
+from sneck.classes.game_states import (GameOverState, PlayingState,
+                                       ScoreBoardState, TitleScreenState)
+from sneck.protocols.game_context import GameContext
+from sneck.protocols.game_state import GameState
+from sneck.protocols.state_manager_context import StateManagerContext
 
 
 class StateManager(StateManagerContext):

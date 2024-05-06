@@ -1,6 +1,6 @@
 import yaml
 
-from .score_board_entry import ScoreBoardEntry
+from sneck.classes.score_board_entry import ScoreBoardEntry
 
 
 class ScoreBoardData:

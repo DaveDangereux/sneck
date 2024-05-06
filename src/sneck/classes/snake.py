@@ -1,8 +1,8 @@
 from copy import copy
 
-from ..assets.ascii_chars import snake_chars
-from ..enumerations.direction import Direction
-from .position import Position
+from sneck.assets.ascii_chars import snake_chars
+from sneck.classes.position import Position
+from sneck.enumerations import Direction
 
 
 class Snake:

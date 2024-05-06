@@ -1,6 +1,6 @@
-from ..assets.ascii_chars import box_chars
-from ..classes.board import Board
-from ..classes.text import Text
+from sneck.assets.ascii_chars import box_chars
+from sneck.classes.board import Board
+from sneck.classes.text import Text
 
 
 def paint_border(board: Board) -> None:

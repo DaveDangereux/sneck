@@ -1,8 +1,8 @@
 from typing import Protocol
 
-from ..classes.board import Board
-from ..classes.score_board_data import ScoreBoardData
-from ..classes.screen import Screen
+from sneck.classes.board import Board
+from sneck.classes.score_board_data import ScoreBoardData
+from sneck.classes.screen import Screen
 
 
 class GameContext(Protocol):

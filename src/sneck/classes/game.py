@@ -1,7 +1,7 @@
-from .board import Board
-from .score_board_data import ScoreBoardData
-from .screen import Screen
-from .state_manager import StateManager
+from sneck.classes.board import Board
+from sneck.classes.score_board_data import ScoreBoardData
+from sneck.classes.screen import Screen
+from sneck.classes.state_manager import StateManager
 
 
 class Game:

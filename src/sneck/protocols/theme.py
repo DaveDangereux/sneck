@@ -1,7 +1,6 @@
 from typing import Protocol
 
-from ..enumerations.colour import Colour
-from ..enumerations.text_type import TextType
+from sneck.enumerations import Colour, TextType
 
 
 class Theme(Protocol):

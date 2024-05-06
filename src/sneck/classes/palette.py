@@ -1,14 +1,9 @@
 import curses
 
-from ..enumerations.colour import Colour
-from ..enumerations.text_type import TextType
-from .themes.blood import BloodTheme
-from .themes.custard import CustardTheme
-from .themes.default import DefaultTheme
-from .themes.forest import ForestTheme
-from .themes.monochrome import MonochromeTheme
-from .themes.pink import PinkTheme
-from .themes.space import SpaceTheme
+from sneck.classes.themes import (BloodTheme, CustardTheme, DefaultTheme,
+                                  ForestTheme, MonochromeTheme, PinkTheme,
+                                  SpaceTheme)
+from sneck.enumerations import Colour, TextType
 
 
 class Palette:
