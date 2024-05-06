@@ -1,14 +1,13 @@
 from sneck.classes.text import Text
 from sneck.enumerations import TextType
+from sneck.protocols.game_context import GameContext
 from sneck.protocols.game_state import GameState
-from sneck.protocols.state_manager_context import StateManagerContext
 from sneck.tools import painter
 
 
 class TitleScreenState(GameState):
-    def __init__(self, state_manager: StateManagerContext):
-        self.state_manager = state_manager
-        self.game = state_manager.game
+    def __init__(self, game: GameContext):
+        self.game = game
 
         self.game.screen.palette.load_default_theme()
         self.game.screen.disable_animation()
@@ -21,7 +20,7 @@ class TitleScreenState(GameState):
         self.game.screen.add_board(self.game.board)
         self.game.screen.refresh()
 
-        while self.state_manager.state == self:
+        while self.game.state == self:
             self._process_user_input()
 
     def _make_title_text(self):
@@ -42,4 +41,4 @@ class TitleScreenState(GameState):
                 self.game.screen.stop()
                 exit(0)
             case " ":
-                self.state_manager.transition_to_playing()
+                self.game.transition_to_playing()
