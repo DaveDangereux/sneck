@@ -6,16 +6,15 @@ from sneck.classes.position import Position
 from sneck.classes.snake import Snake
 from sneck.classes.text import Text
 from sneck.enumerations import Direction, TextType
+from sneck.protocols.game_context import GameContext
 from sneck.protocols.game_state import GameState
-from sneck.protocols.state_manager_context import StateManagerContext
 from sneck.tools import painter
 
 
 class PlayingState(GameState):
-    def __init__(self, state_manager: StateManagerContext):
-        self.state_manager = state_manager
+    def __init__(self, game: GameContext):
+        self.game = game
 
-        self.game = state_manager.game
         self.game.score = 0
         self.game_over = False
         self.snake = Snake(position=self.game.board.get_center())
@@ -30,12 +29,12 @@ class PlayingState(GameState):
         self._add_fruit_to_board()
         self._update_board()
 
-        while self.state_manager.state == self:
+        while self.game.state == self:
             self._process_user_input()
             self.snake.update_head_position()
             self._check_for_collision()
             if self.game_over:
-                self.state_manager.transition_to_game_over()
+                self.game.transition_to_game_over()
                 return
             self._update_board()
             time.sleep(self.game.frame_duration)

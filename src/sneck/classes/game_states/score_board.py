@@ -1,14 +1,13 @@
 from sneck.classes.text import Text
 from sneck.enumerations import TextType
+from sneck.protocols.game_context import GameContext
 from sneck.protocols.game_state import GameState
-from sneck.protocols.state_manager_context import StateManagerContext
 from sneck.tools import painter
 
 
 class ScoreBoardState(GameState):
-    def __init__(self, state_manager: StateManagerContext):
-        self.state_manager = state_manager
-        self.game = state_manager.game
+    def __init__(self, game: GameContext):
+        self.game = game
 
         self.editing = False
         self._rank = self.game.score_board_data.get_rank(self.game.score)
@@ -28,7 +27,7 @@ class ScoreBoardState(GameState):
         self.game.screen.add_board(self.game.board)
         self.game.screen.refresh()
 
-        while self.state_manager.state == self:
+        while self.game.state == self:
             if self.editing:
                 self._process_name_entry()
             else:
@@ -69,7 +68,7 @@ class ScoreBoardState(GameState):
         key = self.game.screen.get_key().upper()
 
         if key == " ":
-            self.state_manager.transition_to_title_screen()
+            self.game.transition_to_title_screen()
 
     def _process_name_entry(self):
         key = self.game.screen.get_key().upper()
