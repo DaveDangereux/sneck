@@ -1,2 +1,3 @@
-all:
-	npx nodemon -e py -x 'clear && python ./scripts/main.py'
+default:
+	poetry shell
+	python -m sneck
