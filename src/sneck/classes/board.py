@@ -1,9 +1,18 @@
-from sneck.assets.ascii_chars import box_chars
 from sneck.classes.position import Position
 from sneck.classes.text import Text
+from sneck.enumerations import TextType
 
 
 class Board:
+    _BOX_CHARS = {
+        "top_left": Text("╔", TextType.WALL),
+        "top_right": Text("╗", TextType.WALL),
+        "bottom_left": Text("╚", TextType.WALL),
+        "bottom_right": Text("╝", TextType.WALL),
+        "horizontal_bar": Text("═", TextType.WALL),
+        "vertical_bar": Text("║", TextType.WALL),
+    }
+
     _board: list[list[Text]]
 
     def __init__(self, rows: int, cols: int):
@@ -47,16 +56,16 @@ class Board:
 
     def write_border(self) -> None:
         for row in self._board:
-            row[0] = box_chars["vertical_bar"]
-            row[-1] = box_chars["vertical_bar"]
+            row[0] = self._BOX_CHARS["vertical_bar"]
+            row[-1] = self._BOX_CHARS["vertical_bar"]
 
-        self._board[0] = [box_chars["horizontal_bar"] for _ in self._board[0]]
-        self._board[0][0] = box_chars["top_left"]
-        self._board[0][-1] = box_chars["top_right"]
+        self._board[0] = [self._BOX_CHARS["horizontal_bar"] for _ in self._board[0]]
+        self._board[0][0] = self._BOX_CHARS["top_left"]
+        self._board[0][-1] = self._BOX_CHARS["top_right"]
 
-        self._board[-1] = [box_chars["horizontal_bar"] for _ in self._board[0]]
-        self._board[-1][0] = box_chars["bottom_left"]
-        self._board[-1][-1] = box_chars["bottom_right"]
+        self._board[-1] = [self._BOX_CHARS["horizontal_bar"] for _ in self._board[0]]
+        self._board[-1][0] = self._BOX_CHARS["bottom_left"]
+        self._board[-1][-1] = self._BOX_CHARS["bottom_right"]
 
     def write_centre_text(self, lines: list[Text]) -> None:
         # TODO: Guard against out of bounds assignments
