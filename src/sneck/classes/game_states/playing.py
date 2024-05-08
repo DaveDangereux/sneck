@@ -24,7 +24,7 @@ class PlayingState(GameState):
     def run(self):
         self.game.screen.erase()
         self.game.board.clear()
-        self.game.board.paint_border()
+        self.game.board.write_border()
         self._add_fruit_to_board()
         self._update_board()
 

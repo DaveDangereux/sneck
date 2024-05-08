@@ -14,7 +14,7 @@ class GameOverState(GameState):
     def run(self):
         self.game.screen.erase()
         self.game.board.clear()
-        self.game.board.paint_centre_text(
+        self.game.board.write_centre_text(
             [
                 Text("G A M E  O V E R", TextType.GAME_OVER),
                 Text(""),

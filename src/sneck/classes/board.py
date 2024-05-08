@@ -45,7 +45,7 @@ class Board:
     def erase_cell(self, position: Position) -> None:
         self._board[position.row][position.col] = Text(" ")
 
-    def paint_border(self) -> None:
+    def write_border(self) -> None:
         for row in self._board:
             row[0] = box_chars["vertical_bar"]
             row[-1] = box_chars["vertical_bar"]
@@ -58,7 +58,7 @@ class Board:
         self._board[-1][0] = box_chars["bottom_left"]
         self._board[-1][-1] = box_chars["bottom_right"]
 
-    def paint_centre_text(self, lines: list[Text]) -> None:
+    def write_centre_text(self, lines: list[Text]) -> None:
         # TODO: Guard against out of bounds assignments
         row_offset = (self._rows - len(lines)) // 2
 

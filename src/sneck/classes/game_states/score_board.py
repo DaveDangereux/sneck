@@ -61,7 +61,7 @@ class ScoreBoardState(GameState):
             lines.append(Text(""))
 
         lines.pop(-1)
-        self.game.board.paint_centre_text(lines)
+        self.game.board.write_centre_text(lines)
 
     def _process_user_input(self):
         key = self.game.screen.get_key().upper()
