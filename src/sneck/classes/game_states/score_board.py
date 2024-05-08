@@ -2,7 +2,6 @@ from sneck.classes.text import Text
 from sneck.enumerations import TextType
 from sneck.protocols.game_context import GameContext
 from sneck.protocols.game_state import GameState
-from sneck.tools import painter
 
 
 class ScoreBoardState(GameState):
@@ -62,7 +61,7 @@ class ScoreBoardState(GameState):
             lines.append(Text(""))
 
         lines.pop(-1)
-        painter.paint_centre_text(self.game.board, lines)
+        self.game.board.paint_centre_text(lines)
 
     def _process_user_input(self):
         key = self.game.screen.get_key().upper()

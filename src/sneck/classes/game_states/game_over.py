@@ -2,7 +2,6 @@ from sneck.classes.text import Text
 from sneck.enumerations import TextType
 from sneck.protocols.game_context import GameContext
 from sneck.protocols.game_state import GameState
-from sneck.tools import painter
 
 
 class GameOverState(GameState):
@@ -15,8 +14,7 @@ class GameOverState(GameState):
     def run(self):
         self.game.screen.erase()
         self.game.board.clear()
-        painter.paint_centre_text(
-            self.game.board,
+        self.game.board.paint_centre_text(
             [
                 Text("G A M E  O V E R", TextType.GAME_OVER),
                 Text(""),

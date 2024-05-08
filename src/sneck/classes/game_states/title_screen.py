@@ -2,7 +2,6 @@ from sneck.classes.text import Text
 from sneck.enumerations import TextType
 from sneck.protocols.game_context import GameContext
 from sneck.protocols.game_state import GameState
-from sneck.tools import painter
 
 
 class TitleScreenState(GameState):
@@ -24,8 +23,7 @@ class TitleScreenState(GameState):
             self._process_user_input()
 
     def _make_title_text(self):
-        painter.paint_centre_text(
-            self.game.board,
+        self.game.board.paint_centre_text(
             [
                 Text("S N E C K", TextType.TITLE),
                 Text("Press space", TextType.INFO),
