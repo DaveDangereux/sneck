@@ -23,7 +23,7 @@ class TitleScreenState(GameState):
             self._process_user_input()
 
     def _make_title_text(self):
-        self.game.board.paint_centre_text(
+        self.game.board.write_centre_text(
             [
                 Text("S N E C K", TextType.TITLE),
                 Text("Press space", TextType.INFO),
