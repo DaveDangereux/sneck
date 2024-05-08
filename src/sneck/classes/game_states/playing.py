@@ -1,7 +1,6 @@
 import random
 import time
 
-from sneck.assets.ascii_chars import fruit
 from sneck.classes.position import Position
 from sneck.classes.snake import Snake
 from sneck.classes.text import Text
@@ -11,6 +10,8 @@ from sneck.protocols.game_state import GameState
 
 
 class PlayingState(GameState):
+    fruit = Text("◉", TextType.FRUIT)
+
     def __init__(self, game: GameContext):
         self.game = game
 
@@ -73,7 +74,7 @@ class PlayingState(GameState):
 
         if target_cell_value == Text(" "):
             return
-        elif target_cell_value == fruit:
+        elif target_cell_value == self.fruit:
             self._add_fruit_to_board()
             self.snake.increase_length()
             self.game.score += 10
@@ -94,7 +95,7 @@ class PlayingState(GameState):
                 cell_value == Text(" ")
                 and random_cell != self.snake.get_head_position()
             ):
-                self.game.board.write_cell(random_cell, fruit)
+                self.game.board.write_cell(random_cell, self.fruit)
                 return
 
     def _process_user_input(self) -> None:
