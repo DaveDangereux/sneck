@@ -1,12 +1,12 @@
 from copy import copy
 
-from sneck.assets.ascii_chars import snake_chars
 from sneck.classes.position import Position
-from sneck.enumerations import Direction
+from sneck.classes.text import Text
+from sneck.enumerations import Direction, TextType
 
 
 class Snake:
-    head_char = snake_chars["head"]
+    _head_char = Text("█", TextType.SNAKE)
 
     _OPPOSITE_DIRECTIONS = {
         Direction.UP: Direction.DOWN,

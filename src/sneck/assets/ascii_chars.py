@@ -10,6 +10,4 @@ box_chars = {
     "vertical_bar": Text("║", TextType.WALL),
 }
 
-snake_chars = {"head": Text("█", TextType.SNAKE)}
-
 fruit = Text("◉", TextType.FRUIT)
