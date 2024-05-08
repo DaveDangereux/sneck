@@ -51,7 +51,7 @@ class PlayingState(GameState):
 
     def _write_head_to_board(self) -> None:
         head_position = self.snake.get_head_position()
-        self.game.board.write_cell(head_position, self.snake.head_char)
+        self.game.board.write_cell(head_position, self.snake._head_char)
 
     def _update_score_bar(self) -> None:
         text_width = self.game.board.get_width()
