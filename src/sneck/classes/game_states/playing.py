@@ -42,7 +42,7 @@ class PlayingState(GameState):
     def _update_board(self) -> None:
         self._write_head_to_board()
         self._cleanup_tail()
-        self.game.screen.add_board(self.game.board)
+        self.game.screen.draw_board(self.game.board)
         self._update_score_bar()
         self.game.screen.refresh()
 
@@ -66,7 +66,7 @@ class PlayingState(GameState):
 
         score_bar_text = score_text + high_score_text + "\n"
 
-        self.game.screen.add_score_bar(Text(score_bar_text, TextType.SCORE))
+        self.game.screen.draw_score_bar(Text(score_bar_text, TextType.SCORE))
 
     def _check_for_collision(self) -> None:
         head_position = self.snake.get_head_position()

@@ -16,7 +16,7 @@ class TitleScreenState(GameState):
         self.game.board.clear()
         self._make_title_text()
 
-        self.game.screen.add_board(self.game.board)
+        self.game.screen.draw_board(self.game.board)
         self.game.screen.refresh()
 
         while self.game.state == self:
