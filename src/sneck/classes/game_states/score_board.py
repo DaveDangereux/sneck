@@ -23,7 +23,7 @@ class ScoreBoardState(GameState):
         self.game.board.clear()
         self._make_score_text()
 
-        self.game.screen.add_board(self.game.board)
+        self.game.screen.draw_board(self.game.board)
         self.game.screen.refresh()
 
         while self.game.state == self:
@@ -87,5 +87,5 @@ class ScoreBoardState(GameState):
             self.game.score_board_data.save()
 
         self._make_score_text()
-        self.game.screen.add_board(self.game.board)
+        self.game.screen.draw_board(self.game.board)
         self.game.screen.refresh()

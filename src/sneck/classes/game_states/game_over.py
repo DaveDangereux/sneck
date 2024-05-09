@@ -25,7 +25,7 @@ class GameOverState(GameState):
             ],
         )
 
-        self.game.screen.add_board(self.game.board)
+        self.game.screen.draw_board(self.game.board)
         self.game.screen.refresh()
 
         while self.game.state == self:

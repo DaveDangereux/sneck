@@ -36,7 +36,7 @@ class Screen:
     def enable_animation(self) -> None:
         self._stdscr.nodelay(True)
 
-    def add_board(self, board: Board) -> None:
+    def draw_board(self, board: Board) -> None:
         for row_index, row in enumerate(board.get_lines()):
             for col_index, text in enumerate(row):
                 self.add_char(
@@ -46,7 +46,7 @@ class Screen:
                     self.palette.get_colour_from_type(text.type),
                 )
 
-    def add_score_bar(self, score_bar_text: Text) -> None:
+    def draw_score_bar(self, score_bar_text: Text) -> None:
         self.add_string(
             self._board_row_offset - 1,
             self._board_col_offset,
@@ -54,7 +54,7 @@ class Screen:
             self.palette.get_colour_from_type(score_bar_text.type),
         )
 
-    def add_debug_info(self, board: Board, text: str) -> None:
+    def draw_debug_info(self, board: Board, text: str) -> None:
         board_rows, _ = board.get_dimensions()
         row_offset = (self._rows - board_rows) // 2 + board_rows
 
