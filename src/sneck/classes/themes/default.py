@@ -1,5 +1,5 @@
+from sneck.classes.theme import Theme
 from sneck.enumerations import Colour
-from sneck.protocols.theme import Theme
 
 
 class DefaultTheme(Theme):
@@ -7,9 +7,10 @@ class DefaultTheme(Theme):
     SNAKE = Colour.GREEN
     WALL = Colour.WHITE
     FRUIT = Colour.RED
-    SCORE = Colour.WHITE
+    FINAL_SCORE = Colour.WHITE
+    SCORE_BAR = Colour.WHITE
     TITLE = Colour.GREEN
-    INFO = Colour.WHITE
+    INFO = Colour.YELLOW
     GAME_OVER = Colour.RED
     HIGH_SCORE_TITLE = Colour.RED
     HIGH_SCORE_TEXT = Colour.WHITE

@@ -7,3 +7,6 @@ from sneck.enumerations import TextType
 class Text:
     value: str
     type: TextType = TextType.DEFAULT
+
+    def clear(self):
+        self.value = ""

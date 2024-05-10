@@ -38,6 +38,9 @@ class Board:
     def get_dimensions(self) -> tuple[int, int]:
         return self._rows, self._cols
 
+    def get_height(self) -> int:
+        return self._rows
+
     def get_width(self) -> int:
         return self._cols
 

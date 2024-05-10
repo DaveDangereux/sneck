@@ -1,18 +1,21 @@
-from typing import Protocol
+from abc import ABC
 
 from sneck.enumerations import Colour, TextType
 
 
-class Theme(Protocol):
+class Theme(ABC):
     DEFAULT: Colour
     SNAKE: Colour
     WALL: Colour
     FRUIT: Colour
-    SCORE: Colour
+    FINAL_SCORE: Colour
+    SCORE_BAR: Colour
     TITLE: Colour
     INFO: Colour
     GAME_OVER: Colour
-    HIGH_SCORES: Colour
+    HIGH_SCORE_TITLE: Colour
+    HIGH_SCORE_TEXT: Colour
+    HIGH_SCORE_TEXT_ACTIVE: Colour
 
     def __init__(self):
         self._check_theme_protocol_implements_all_text_types()

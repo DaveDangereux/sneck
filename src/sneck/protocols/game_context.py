@@ -1,19 +1,27 @@
 from abc import abstractmethod
 from typing import Protocol
 
-from sneck.classes.board import Board
+from sneck.classes.display import Display
+from sneck.classes.output import Output
 from sneck.classes.score_board_data import ScoreBoardData
-from sneck.classes.screen import Screen
 from sneck.protocols.game_state import GameState
 
 
 class GameContext(Protocol):
-    board: Board
-    frame_duration: float
+    output: Output
     score: int
-    score_board_data: ScoreBoardData
-    screen: Screen
     state: GameState
+    display: Display
+    score_board_data: ScoreBoardData
+
+    @abstractmethod
+    def handle_input(self, key: str): ...
+
+    @abstractmethod
+    def run(self): ...
+
+    @abstractmethod
+    def get_output(self) -> Output: ...
 
     @abstractmethod
     def transition_to_title_screen(self): ...
