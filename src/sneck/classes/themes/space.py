@@ -7,4 +7,4 @@ class SpaceTheme(DefaultTheme):
     SNAKE = Colour.BLUE
     WALL = Colour.BLUE
     FRUIT = Colour.YELLOW
-    SCORE = Colour.WHITE
+    SCORE_BAR = Colour.WHITE

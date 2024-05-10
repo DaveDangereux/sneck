@@ -6,31 +6,46 @@ from sneck.protocols.game_state import GameState
 
 class ScoreBoardState(GameState):
     def __init__(self, game: GameContext):
-        self.game = game
+        # game aliases
+        self._game = game
+        self._board = game.output.board
+        self._display = game.display
 
         self.editing = False
-        self._rank = self.game.score_board_data.get_rank(self.game.score)
+        self._rank = self._game.score_board_data.get_rank(self._game.score)
 
-        self.game.screen.palette.load_default_theme()
-        self.game.screen.disable_animation()
+        self._display.load_default_theme()
 
-    def run(self):
         if self._rank:
-            self._entry = self.game.score_board_data.insert_entry(self.game.score)
+            self._entry = self._game.score_board_data.insert_entry(self._game.score)
             self.editing = True
 
-        self.game.screen.erase()
-        self.game.board.clear()
+    def handle_input(self, key: str):
+        if self.editing:
+            self._process_name_entry(key)
+        elif key == " ":
+            self._game.transition_to_title_screen()
+
+    def run(self):
+        self._board.clear()
         self._make_score_text()
 
-        self.game.screen.draw_board(self.game.board)
-        self.game.screen.refresh()
+    def _process_name_entry(self, key: str):
+        name_length = len(self._entry.player)
 
-        while self.game.state == self:
-            if self.editing:
-                self._process_name_entry()
-            else:
-                self._process_user_input()
+        is_valid_name_char = key.isalnum() or key == " "
+        is_backspace = ord(key) == 127
+        is_enter = ord(key) == 10
+
+        if is_valid_name_char and name_length < 3:
+            self._entry.player += key
+        elif is_backspace:
+            self._entry.player = self._entry.player[:-1]
+        elif is_enter and len(self._entry.player) > 0:
+            self.editing = False
+            self._game.score_board_data.save()
+
+        self._make_score_text()
 
     def _make_score_text(self) -> None:
         lines: list[Text] = [
@@ -39,10 +54,10 @@ class ScoreBoardState(GameState):
         ]
         spacing = " " * 2
 
-        for index, entry in enumerate(self.game.score_board_data.entries):
+        for index, entry in enumerate(self._game.score_board_data.entries):
             rank = index + 1
-            is_current_player_entry = rank == self.game.score_board_data.get_rank(
-                self.game.score
+            is_current_player_entry = rank == self._game.score_board_data.get_rank(
+                self._game.score
             )
             entry_text_type = (
                 TextType.HIGH_SCORE_TEXT_ACTIVE
@@ -61,31 +76,4 @@ class ScoreBoardState(GameState):
             lines.append(Text(""))
 
         lines.pop(-1)
-        self.game.board.write_centre_text(lines)
-
-    def _process_user_input(self):
-        key = self.game.screen.get_key().upper()
-
-        if key == " ":
-            self.game.transition_to_title_screen()
-
-    def _process_name_entry(self):
-        key = self.game.screen.get_key().upper()
-
-        name_length = len(self._entry.player)
-
-        is_valid_name_char = key.isalnum() or key == " "
-        is_backspace = ord(key) == 127
-        is_enter = ord(key) == 10
-
-        if is_valid_name_char and name_length < 3:
-            self._entry.player += key
-        elif is_backspace:
-            self._entry.player = self._entry.player[:-1]
-        elif is_enter and len(self._entry.player) > 0:
-            self.editing = False
-            self.game.score_board_data.save()
-
-        self._make_score_text()
-        self.game.screen.draw_board(self.game.board)
-        self.game.screen.refresh()
+        self._board.write_centre_text(lines)

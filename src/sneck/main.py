@@ -1,8 +1,8 @@
-from sneck.classes.game import Game
+from sneck.classes.app import App
 
 
 def main():
-    Game().run()
+    App().run()
 
 
 if __name__ == "__main__":

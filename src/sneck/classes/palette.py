@@ -51,7 +51,7 @@ class Palette:
     def load_default_theme(self):
         self.theme = DefaultTheme
 
-    def load_next_theme(self):
+    def next_theme(self):
         current_theme_index = self.themes.index(self.theme)
         next_theme_index = (current_theme_index + 1) % len(self.themes)
         self.theme = self.themes[next_theme_index]

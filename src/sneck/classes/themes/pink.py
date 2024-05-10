@@ -4,7 +4,7 @@ from .default import DefaultTheme
 
 
 class PinkTheme(DefaultTheme):
-    SNAKE = Colour.WHITE
+    SNAKE = Colour.BLUE
     WALL = Colour.MAGENTA
-    FRUIT = Colour.WHITE
-    SCORE = Colour.WHITE
+    FRUIT = Colour.RED
+    SCORE_BAR = Colour.MAGENTA

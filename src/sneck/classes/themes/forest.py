@@ -7,4 +7,4 @@ class ForestTheme(DefaultTheme):
     SNAKE = Colour.GREEN
     WALL = Colour.GREEN
     FRUIT = Colour.RED
-    SCORE = Colour.GREEN
+    SCORE_BAR = Colour.GREEN

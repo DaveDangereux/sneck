@@ -7,4 +7,4 @@ class CustardTheme(DefaultTheme):
     SNAKE = Colour.YELLOW
     WALL = Colour.YELLOW
     FRUIT = Colour.MAGENTA
-    SCORE = Colour.YELLOW
+    SCORE_BAR = Colour.YELLOW

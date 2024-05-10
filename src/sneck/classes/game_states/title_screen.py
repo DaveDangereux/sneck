@@ -7,36 +7,24 @@ from sneck.protocols.game_state import GameState
 class TitleScreenState(GameState):
     def __init__(self, game: GameContext):
         self.game = game
+        self._board = game.output.board
 
-        self.game.screen.palette.load_default_theme()
-        self.game.screen.disable_animation()
+        game.display.load_default_theme()
+        self._board.clear()
 
-    def run(self):
-        self.game.screen.erase()
-        self.game.board.clear()
-        self._make_title_text()
+        self._write_title_screen()
 
-        self.game.screen.draw_board(self.game.board)
-        self.game.screen.refresh()
+    def handle_input(self, key: str):
+        if key == " ":
+            self.game.transition_to_playing()
 
-        while self.game.state == self:
-            self._process_user_input()
+    def run(self): ...
 
-    def _make_title_text(self):
-        self.game.board.write_centre_text(
+    def _write_title_screen(self):
+        self.game.output.board.write_centre_text(
             [
                 Text("S N E C K", TextType.TITLE),
                 Text("Press space", TextType.INFO),
                 Text("to play", TextType.INFO),
             ],
         )
-
-    def _process_user_input(self):
-        key = self.game.screen.get_key().upper()
-
-        match key:
-            case "Q":
-                self.game.screen.stop()
-                exit(0)
-            case " ":
-                self.game.transition_to_playing()

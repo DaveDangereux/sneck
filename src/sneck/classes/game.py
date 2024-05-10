@@ -1,29 +1,40 @@
 from sneck.classes.board import Board
+from sneck.classes.display import Display
 from sneck.classes.game_states import (GameOverState, PlayingState,
                                        ScoreBoardState, TitleScreenState)
+from sneck.classes.output import Output
 from sneck.classes.score_board_data import ScoreBoardData
-from sneck.classes.screen import Screen
+from sneck.classes.text import Text
+from sneck.enumerations.text_type import TextType
 from sneck.protocols.game_context import GameContext
 
 
 class Game(GameContext):
-    FPS = 7
-    ROWS = 15
-    COLS = 22
+    def __init__(self, display: Display):
+        self.display = display
 
-    def __init__(self):
-        self.score = 0
-        self.frame_duration = 1.0 / self.FPS
         self.score_board_data = ScoreBoardData()
 
-        self.board = Board(self.ROWS, self.COLS)
-        self.screen = Screen(self.ROWS, self.COLS)
+        board = Board(rows=15, cols=22)
+        score_bar_text = Text("", TextType.SCORE_BAR)
+        self.output = Output(board, score_bar_text)
 
         self.state = TitleScreenState(self)
 
-    def run(self) -> None:
-        while True:
-            self.state.run()
+        self.score = 0
+
+    def handle_input(self, key: str):
+        if key == "Q":
+            self.display.stop()
+            exit(0)
+
+        self.state.handle_input(key)
+
+    def run(self):
+        self.state.run()
+
+    def get_output(self):
+        return self.output
 
     def transition_to_title_screen(self):
         self.state = TitleScreenState(self)
