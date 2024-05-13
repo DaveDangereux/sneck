@@ -32,11 +32,12 @@ turn into a personal learning project for a week or two.
 
 ## Screenshots
 
-![Early Game](https://github.com/DaveDangereux/sneck/assets/61416292/9af4b943-23f2-4be4-bc4e-583e1f63f2eb)
-![Blood Theme](https://github.com/DaveDangereux/sneck/assets/61416292/cbf602ae-613a-4a7d-9a62-c31384b3b126)
-![Pink Theme](https://github.com/DaveDangereux/sneck/assets/61416292/72345030-299a-4b1e-a87c-b1d4c8e8a5a0)
+![Early Game](https://github.com/DaveDangereux/sneck/assets/61416292/1da49e32-d317-43b2-9092-3d2e4acc11e9)
+![Blood Theme](https://github.com/DaveDangereux/sneck/assets/61416292/b0683abe-df21-46f8-9cec-e0931e55ef04)
+![Pink Theme](https://github.com/DaveDangereux/sneck/assets/61416292/40de4aa8-fe33-4b10-a826-4473cc707e54)
 
 *Screenshots showing a selection of colour schemes, unlocked every 100 points.*
+
 
 ## Installation
 
