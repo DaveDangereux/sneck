@@ -32,7 +32,7 @@ turn into a personal learning project for a week or two.
 
 ## Installation
 
-The project uses [Poetry](https://python-poetry.org/) to manage dependencies.
+This project uses [Poetry](https://python-poetry.org/) to manage dependencies.
 
 To run the project, use the following command:
 
@@ -47,8 +47,8 @@ poetry install
 poetry run python -m sneck
 ```
 
-Although Windows users may have other issues - see [Known Issues](#Known
-Issues).
+Windows compatibility is not confirmed yet - see [Known
+Issues](https://github.com/DaveDangereux/sneck/tree/dave/dt-58-update-readme?tab=readme-ov-file#known-issues).
 
 
 ## Controls
