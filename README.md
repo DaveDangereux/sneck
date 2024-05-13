@@ -57,7 +57,7 @@ poetry run python -m sneck
 ```
 
 Windows compatibility is not confirmed yet - see [Known
-Issues](https://github.com/DaveDangereux/sneck/edit/main/README.md#known-issues).
+Issues](https://github.com/DaveDangereux/sneck/tree/main#known-issues).
 
 
 ## Controls
