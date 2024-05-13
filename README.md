@@ -30,6 +30,14 @@ from functional. However, the objective was compelling enough to take home and
 turn into a personal learning project for a week or two.
 
 
+## Screenshots
+
+![Early Game](https://github.com/DaveDangereux/sneck/assets/61416292/9af4b943-23f2-4be4-bc4e-583e1f63f2eb)
+![Blood Theme](https://github.com/DaveDangereux/sneck/assets/61416292/cbf602ae-613a-4a7d-9a62-c31384b3b126)
+![Pink Theme](https://github.com/DaveDangereux/sneck/assets/61416292/72345030-299a-4b1e-a87c-b1d4c8e8a5a0)
+
+*Screenshots showing a selection of colour schemes, unlocked every 100 points.*
+
 ## Installation
 
 This project uses [Poetry](https://python-poetry.org/) to manage dependencies.
